@@ -1,1 +1,13 @@
-theme: jekyll-theme-minimal
+title: 0x00019913 Brog
+description: Brogging
+url: "https://0x00019913.github.io"
+
+# build
+markdown: kramdown
+permalink: pretty
+
+highlighter: rouge
+kramdown:
+  input: GFM
+  auto_ids: true
+  syntax_highlighter: rouge

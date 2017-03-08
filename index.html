@@ -2,4 +2,11 @@
 layout: default
 ---
 
-<p>asdf</p>
+{% for post in site.posts %}
+
+  <div class="post-line">
+    <span class="post-date">{{ post.date }}</span>
+    <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+  </div>
+
+{% endfor %}
