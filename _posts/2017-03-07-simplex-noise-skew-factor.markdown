@@ -3,7 +3,7 @@ layout: post
 title: "Simplex Noise Skew Factor"
 author: "0x00019913"
 mathjax: true
-excerpt: "I explain the simplex noise skew factor."
+excerpt: "I explain the elusive simplex noise skew factor."
 date: 2017-03-07 16:00:00
 ---
 
@@ -41,13 +41,13 @@ Two facts about the skewing:
 1. Every point is moved parallel to the $$x=y$$ line, so you'll add the same quantity to the $$x$$ and $$y$$ coords.
 2. There are $$x+y = constant$$ isolines, which are normal to the $$x=y$$ line. Every point on a given isoline will move by the same amount.
 
-So, we need to get $$(x',y')$$ given $$(x,y)$$ and the quantity $$(x+y)$$. It's a linear transformation, so $$(x+y)$$ must be involved. Let's pick a point, add $$(x+y)$$ times some constant, and figure out what this constant has to be.
+So, we need to get $$(x',y')$$ given $$(x,y)$$ and the quantity $$(x+y)$$. It's a linear transformation, and $$(x+y)$$ must be involved. Let's pick a point, add $$(x+y)$$ times some constant, and figure out what this constant has to be.
 
 (Not rigorous? I did graduate with a physics major. XD)
 
 So let's take that point that's just north-east of the origin. What are its coordinates? Turns out it's at $$(\frac{1}{\sqrt{3}},\frac{1}{\sqrt{3}})$$. This makes the triangles $$\sqrt{\frac{2}{3}}$$ long on a side. Why? Dunno. I guess Ken Perlin came up with the quantity and everyone kinda followed along. This length does not seem to be specified anywhere, and assuming a different length produces a different result.
 
-Need to turn this point into $$(1,1)$$. By fact 1, we need only work with the x-coord. Given $$x+y=\frac{2}{\sqrt{3}}$$, we solve $$x + (x+y)k = x'$$:
+Now, need to turn this point into $$(1,1)$$. By fact 1, we need only work with the x-coord. Given $$x+y=\frac{2}{\sqrt{3}}$$, we solve $$x + (x+y)k = x'$$:
 
 $$\frac{1}{\sqrt{3}} + \frac{2}{\sqrt{3}}k = 1$$
 

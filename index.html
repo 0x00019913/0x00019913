@@ -1,14 +1,22 @@
 ---
 layout: default
 ---
+<div class="post-list">
+  <div class="post-list-title">
+    <h1>The Brog of 0x00019913</h1>
+  </div>
+  <div class="post-list-subtitle">
+    <a href="/about/">About</a>
+  </div>
 
 {% for post in site.posts %}
 
-  <div class="post-list">
-    <div class="post-list-line">
-      <span class="post-list-date">{{ post.date }}</span>
-      <a class="post-list-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-    </div>
+  <div class="post-list-line">
+    <span class="post-list-date">{{ post.date }}</span>
+    <a class="post-list-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+    <div class="post-list-excerpt">{{ post.excerpt }}</div>
   </div>
 
 {% endfor %}
+
+</div>

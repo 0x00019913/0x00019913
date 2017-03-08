@@ -14,6 +14,8 @@ html, body {
   margin: 0;
   padding: 0;
   background-color: #333;
+  text-align: center;
+  color: #ccc;
 }
 
 #main-wrapper {
@@ -27,10 +29,16 @@ html, body {
   z-index: 5;
   position: relative;
   top: 50vh;
+  color: #666;
+}
+.post-list-title {
+  text-align: center;
+}
+.post-list-subtitle {
+  text-align: center;
 }
 
 .post-list-line {
-  width: 100%;
   margin-bottom: 15px;
 }
 a {
@@ -128,4 +136,10 @@ a:hover {
   margin: 75px auto 0;
   background-image: url('/assets/logo.png');
   opacity: 0.75;
+}
+
+/* footer */
+.footer {
+  text-align: center;
+  margin: 0 auto;
 }

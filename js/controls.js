@@ -1,6 +1,6 @@
 // 0x00019913's camera controls
 // To be used with the THREE.js camera.
-// See the constructor for various settable properties like rates and limits.
+// See setDefaults() for various settable properties like rates and limits.
 
 // Free Cam
 // Characterized by:

@@ -11,12 +11,18 @@ Stage = function() {
 Stage.prototype.initViewport = function() {
   var width, height;
   var _this = this;
+  this.container = document.getElementById('header');
+
+  if (!Detector.webgl) {
+    Detector.addGetWebGLMessage();
+    _this.container.innerHTML = "Welp! Your browser doesn't support WebGL. This element will remain blank.";
+    return;
+  }
 
   init();
   animate();
 
   function init() {
-    _this.container = document.getElementById('header');
     height = _this.container.offsetHeight;
     width = _this.container.offsetWidth;
 
@@ -30,8 +36,10 @@ Stage.prototype.initViewport = function() {
       _this.container,
       {
         r: 10,
+        rmax: 10,
+        rmin:10,
         phi: Math.PI/2,
-        theta: 6*Math.PI/11
+        theta: 4*Math.PI/7
       }
     );
 
@@ -58,8 +66,8 @@ Stage.prototype.initViewport = function() {
 
     /* RENDER */
     _this.renderer = new THREE.WebGLRenderer({ antialias: true });
-    _this.renderer.shadowMap.enabled = true;
-    _this.renderer.toneMapping = THREE.ReinhardToneMapping;
+    //_this.renderer.shadowMap.enabled = true;
+    //_this.renderer.toneMapping = THREE.ReinhardToneMapping;
     _this.renderer.setPixelRatio(window.devicePixelRatio);
     _this.renderer.setSize(width, height);
     _this.container.appendChild(_this.renderer.domElement);
