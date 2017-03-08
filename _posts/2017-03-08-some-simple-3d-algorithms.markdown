@@ -7,9 +7,14 @@ excerpt: "A few algorithms I had occasion to learn while writing Meshy."
 date: 2017-03-08 02:10:00
 ---
 
-The original impetus for writing <a href="https://0x00019913.github.io/meshy/">meshy</a> was that I had no nice tool to calculate the center of mass of a mesh (of uniform density, implicitly). I had no idea how I was going to do this at the start, but it turned out to be fairly simple.
+The original impetus for writing <a href="https://0x00019913.github.io/meshy/">meshy</a> was that I had no nice tool to calculate the center of mass of a mesh (of uniform density, implicitly). This mesh is the specific reason - it turns out the center of mass was way out of alignment with the place where the chain hooks into the orbital bones, so it ends up pitching backward if one doesn't hook it to the chain by the horns:
 
-There's a basic idea here that's used to calculate a range of related quantities - volume, COM, and even cross-sectional area. The intuition is described in <a href="http://chenlab.ece.cornell.edu/Publication/Cha/icip01_Cha.pdf">this paper</a>.
+<div class="img-box">
+  <img class="lim300" src="/assets/antelope.jpg" />
+  <div class="img-caption">Antelope pendant.</div>
+</div>
+
+I had no idea how I was going to do this at the start, but it turned out to be fairly simple. There's a basic idea here that's used to calculate a range of related quantities - volume, COM, and even cross-sectional area. The intuition is described in <a href="http://chenlab.ece.cornell.edu/Publication/Cha/icip01_Cha.pdf">this paper</a>.
 
 We assume that our data representation is a polygon soup - of triangles, specifically. Each triangle consists of three vertices and a normal vector.
 
