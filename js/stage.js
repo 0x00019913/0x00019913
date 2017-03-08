@@ -31,7 +31,7 @@ Stage.prototype.initViewport = function() {
       {
         r: 10,
         phi: Math.PI/2,
-        theta: 3*Math.PI/5
+        theta: 6*Math.PI/11
       }
     );
 
