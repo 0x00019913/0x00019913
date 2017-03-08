@@ -4,7 +4,7 @@ title: "Simplex Noise Skew Factor"
 author: "0x00019913"
 mathjax: true
 excerpt: "I explain the elusive simplex noise skew factor."
-date: 2017-03-07 16:00:00
+date: 2017-03-07 16:30:00
 ---
 
 So I was reading about simplex noise <a href="http://weber.itn.liu.se/~stegu/simplexnoise/simplexnoise.pdf">in the Gustavson paper</a>, right? If one understands Perlin ("classic") noise, everything's pretty straighforward by analogy, at least in 2D: imagine that your plane is partitioned into a lattice of triangles, then hash the coordinates of every triangle corner to produce a pseudo-random gradient. Now, it would be nice if the vertices were located at integer coordinates instead - so we perform whatever magic is needed to get each triangle vertex to align with a pair of integer coordinates.
