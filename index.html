@@ -4,9 +4,11 @@ layout: default
 
 {% for post in site.posts %}
 
-  <div class="post-line">
-    <span class="post-date">{{ post.date }}</span>
-    <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+  <div class="post-list">
+    <div class="post-list-line">
+      <span class="post-list-date">{{ post.date }}</span>
+      <a class="post-list-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+    </div>
   </div>
 
 {% endfor %}

@@ -7,7 +7,9 @@ html, body {
 }
 
 #header {
-  height: 500px;
+  position: absolute;
+  z-index: 1;
+  height: 50%;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -21,7 +23,13 @@ html, body {
 }
 
 /* post list */
-.post-line {
+.post-list {
+  z-index: 5;
+  position: relative;
+  top: 50vh;
+}
+
+.post-list-line {
   width: 100%;
   margin-bottom: 15px;
 }
@@ -33,17 +41,30 @@ a:hover {
   color: #869CC5;
 }
 
-.post-date {
+.post-list-date {
   display: block;
   color: #999999;
 }
 
-.post-link {
+.post-list-link {
   display: block;
   font-size: 25px;
 }
 
 /* posts */
+.post {
+  z-index: 5;
+  position: relative;
+  top: 300px;
+  background-color: #fff;
+  padding: 30px;
+  margin-bottom: 30px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+
 .post-header {
   width: 100%;
 }
@@ -104,7 +125,7 @@ a:hover {
 .end-logo {
   width: 32px;
   height: 32px;
-  margin: 75px auto;
+  margin: 75px auto 0;
   background-image: url('/assets/logo.png');
-  opacity: 0.5;
+  opacity: 0.75;
 }
