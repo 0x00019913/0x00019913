@@ -9,9 +9,11 @@ date: 2017-03-08 11:15:00
 
 The base code for <a href="https://0x00019913.github.io/meshy/">meshy</a> descends from a very crude mesh slicing visualizer I wrote to get in the mood for a job interview (based on <a href="http://www.dainf.ct.utfpr.edu.br/~murilo/public/CAD-slicing.pdf">this here paper</a>); this thing imported STL files, turned them into slices, and did nothing else. Thus, the STL format originally informed the internal data structure.
 
+Firstly, a note about Javascript: every vertex is stored as a `THREE.Vector3` object, which Javascript makes available through a reference. You can copy references: given a vertex `v`, you can do `var vp = v;`, so now `vp` will reference the same object. When I say "duplicated vertices" in the following, I mean distinct `THREE.Vector3` objects with the same coordinate values. You can manually diplicate `v` through `v.clone()`.
+
 ### Importing
 
-Binary STL files, <a href="https://en.wikipedia.org/wiki/STL_(file_format)">as detailed on Wikipedia</a>, are little more than an array of binary `normal`, `vertex`, `vertex`, `vertex` blocks - four 3-vectors, each made of 32-bit floats. A given vertex will be repeated for each face that contains it - this is a wee bit inefficient. In terms of importing an STL file into an application, I ended up with an array of `Triangle` objects, each with a normal and three vertices (again, repeated).
+A binary STL file, <a href="https://en.wikipedia.org/wiki/STL_(file_format)">as detailed on Wikipedia</a>, is little more than an array of binary `normal`, `vertex`, `vertex`, `vertex` blocks - four 3-vectors, each made of 32-bit floats. A given vertex will be repeated for each face that contains it - this is a wee bit inefficient, but it makes for a simple format. In terms of importing an STL file into an application, I ended up with an array of `Triangle` objects, each with a normal and three vertices (again, repeated).
 
 OBJ, meanwhile, is a <a href="https://en.wikipedia.org/wiki/Wavefront_.obj_file">much more complicated ASCII format</a>. Just for geometry, it goes something like:
 
@@ -38,7 +40,7 @@ So the vertices are specified uniquely, as are the faces, which are just indices
 
 (To make matters more confusing, OBJs allow n-gons by specifying more than three vertex indices per face. I threw in the towel and said that I'm not allowing n-gons above quads. And I'm triangulating the quads.)
 
-Now, importing this into the "repeating triangle soup" thing I had is straightforward - make a list of vertex objects first, then duplicate them when making a new face. (You couldn't get away with not duplicating them because every algorithm assumed duplicated vertices - e.g., the translation function iterates through the faces, then shifts all the vertices for each face.)
+Now, importing this into the "repeating triangle soup" thing I had is straightforward - make a list of vertex objects first, then duplicate them when making a new face. (You couldn't get away with not duplicating them because every algorithm assumed duplicated vertices - e.g., the translation function iterated through the faces, then shifted all the vertices for each face.)
 
 ### Exporting
 
@@ -58,8 +60,8 @@ The STL import is the only rough part of this, though - exporting STL and OBJ wo
 
 ### What next?
 
-Well, I'm thinking that the grid thing is pretty naive and its performance will vary with how "lumpy" the model is. That said, my only other idea is an octree isn't reeeeeeally an improvement. An octree of depth $$n$$ is just equivalent to an $$2^{n}$$-by-$$2^{n}$$-by-$$2^{n}$$ grid, so, in principle, the grid is even better (because it's three array dereferences to get into the right cell, while for an octree it's $$n$$ array dereferences).
+Well, I'm thinking that the grid thing is pretty naive and its performance will vary with how "lumpy" the model is. That said, my only other idea, an octree, isn't reeeeeeally an improvement. An octree of depth $$n$$ is just equivalent to an $$2^{n}$$-by-$$2^{n}$$-by-$$2^{n}$$ grid in terms of resolution, so, in principle, the grid is even better (because it's three array dereferences to get into the right cell, while for an octree it's $$n$$ array dereferences and probably involves a lot more range comparisons).
 
 Only thing going against the grid, really, is that, because it's an array of arrays of arrays, you'll get lots of arrays with one element and a bunch of undefined values, which, I'm told, are kinda weighty. This happens because Javascript allows you to assign any element of an array - if you do `a=[]; a[5] = 'foo';`, then `a` will be `[undefinedx5, 'foo']`. So, if a vertex goes in the far corner of the grid, we'll end up allocating three mostly-empty arrays. But... the upper limit on the wasted space is $$n^3$$ `undefined`s, and it will almost certainly be much less because geometry tends to be spaced out, so I feel like this is a complete non-issue.
 
-I also think some improvements could be made to how meshy stores geometry. The vertices are stored as a list of `Vector3` objects, which are irreducible. The faces, though, I store as a list of `Triangle` objects, which do have some storage overhead. All they really need is three integer indices and a `Vector3` for the normal, but currently they also store the triangle bounds (`xmin`, `xmax`, etc.), a surface area, and a signed volume. These are all cached for subsequent calculations, but these calculations are fairly discrete and I'd want to experiment to see what kind of performance impact eliminating this internal storage will have.
+I also think some improvements (or, more accurately, reasonable tradeoffs) could be made to how meshy stores geometry. The vertices are stored as a list of `Vector3` objects, which are irreducible. The faces, though, I store as a list of `Triangle` objects, which do have some storage overhead. All they really need is three integer indices and a `Vector3` for the normal, but currently they also store the triangle bounds (`xmin`, `xmax`, etc.), a surface area, and a signed volume. These are all cached for subsequent calculations, but these calculations are fairly discrete and I'd want to experiment to see what kind of performance impact eliminating this internal storage will have.

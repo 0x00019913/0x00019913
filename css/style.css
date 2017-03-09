@@ -22,20 +22,22 @@ html, body {
   max-width: 800px;
   padding: 15px 0;
   margin: 0 auto;
+  position: relative;
+  z-index: 10;
+  top: 500px;
 }
 
 /* post list */
 .post-list {
-  z-index: 5;
-  position: relative;
-  top: 50vh;
   color: #666;
+  padding: 0 15px;
 }
 .post-list-title {
   text-align: center;
 }
 .post-list-subtitle {
   text-align: center;
+  margin-bottom: 15px;
 }
 
 .post-list-line {
@@ -61,11 +63,9 @@ a:hover {
 
 /* posts */
 .post {
-  z-index: 5;
-  position: relative;
-  top: 300px;
   background-color: #fff;
   padding: 30px;
+  margin-top: -200px;
   margin-bottom: 30px;
   border: 1px solid #ddd;
   border-radius: 3px;
