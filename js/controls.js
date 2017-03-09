@@ -51,11 +51,14 @@ Controls = function(camera, domElement, params) {
   var _this = this;
   var mouseX = 0, mouseY = 0;
   var mouseXprev, mouseYprev;
+  var touchX = 0, touchY = 0;
+  var touchXprev, touchYprev;
   var dX, dY;
   var mouseButton = -1;
 
   // add event listeners
   this.domElement.addEventListener('mousemove', onMouseMove, false);
+  this.domElement.addEventListener('touchmove', onTouchMove, false);
   this.domElement.addEventListener('mousedown', onMouseDown, false);
   this.domElement.addEventListener('mouseup', onMouseUp, false);
   this.domElement.addEventListener('mouseenter', onMouseEnter, false);
@@ -77,6 +80,20 @@ Controls = function(camera, domElement, params) {
     if (mouseButton==1) { // MMB
       handleMMB();
     }
+  }
+
+  function onTouchMove(e) {
+    e.preventDefault();
+    var touch = e.changedTouches[0];
+
+    touchXprev = touchX;
+    touchYprev = touchY;
+    touchX = (touch.pageX / _this.domElement.offsetWidth) * 2 - 1;
+    touchY = (touch.pageY / _this.domElement.offsetHeight) * 2 - 1;
+    dX = touchX-touchXprev;
+    dY = touchY-touchYprev;
+
+    handleLMB();
   }
 
   function onMousewheel(e) {
