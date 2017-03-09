@@ -9,13 +9,45 @@ html, body {
 #header {
   position: absolute;
   z-index: 1;
-  height: 50%;
   width: 100%;
   margin: 0;
   padding: 0;
   background-color: #333;
   text-align: center;
   color: #ccc;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  overflow: hidden;
+}
+#header.fullscreen {
+  height: 100%;
+}
+#header.halfscreen {
+  height: 50%;
+}
+#fullscreen-button {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  z-index: 3;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 200ms ease, background-image 200ms ease;
+  -webkit-transition:  opacity 200ms ease, background-image 200ms ease;
+}
+#fullscreen-button.enter {
+  background-image: url('/assets/fullscreen.png');
+}
+#fullscreen-button.exit {
+  background-image: url('/assets/fullscreen_exit.png');
+}
+#fullscreen-button:hover {
+  opacity: 1;
 }
 
 #main-wrapper {

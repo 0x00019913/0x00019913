@@ -7,7 +7,7 @@ excerpt: "A few algorithms I had occasion to learn while writing Meshy."
 date: 2017-03-08 02:10:00
 ---
 
-The original impetus for writing <a href="https://0x00019913.github.io/meshy/">meshy</a> was that I had no nice tool to calculate the center of mass of a mesh (of uniform density, implicitly). This mesh is the specific reason - it turns out the center of mass was way out of alignment with the place where the chain hooks into the orbital bones, so it ends up pitching backward if one doesn't hook it to the chain by the horns:
+The original impetus for writing <a href="https://0x00019913.github.io/meshy/">meshy</a> was that I had no nice tool for calculating the center of mass of a 3D mesh (of uniform density, implicitly). This model is the specific reason - it turned out the center of mass was way out of alignment with the place where the chain hooks into the orbital bones, so it ends up pitching backward if one doesn't hook it to the chain by the horns:
 
 <div class="img-box">
   <img class="lim300" src="/assets/antelope.jpg" />
@@ -26,11 +26,13 @@ $$V = |\frac{1}{6}(-x_3 y_2 z_1 + x_2 y_3 z_1 + x_3 y_1 z_2 - x_1 y_3 z_2 - x_2 
 
 Make this volume negative if the normal is pointing toward the origin - this is equivalent to checking the sign of the inner product of the normal with any of the face's vertices. Now just add these signed volumes for every triangle and the total should equal the total volume.
 
-The paper also points out that you can do away with the sign check and just add up the volume (without the absolute value) assuming a consistent winding order of the vertices.
+Note that the above is independent of the location of the origin (floating-point precision issues notwithstanding, of course). It can be inside or outside the model, or it can even be on the surface.
+
+The paper also notes that you can do away with the sign check and just add up the volume (without the absolute value) assuming a consistent winding order of the vertices.
 
 ### Center of Mass
 
-Not much more complicated - add the individual signed volumes, weighted by the coordinates of the tetrahedron. Then divide the accumulated 3-vector by the total volume, which gives the center of mass. This is the same as finding the first moment.
+Not much more complicated - add the coordinates of the tetrahedron, *weighted by* the individual signed volumes. Then divide the accumulated 3-vector by the total volume, which gives the center of mass. This is the same as finding the first moment.
 
 ### Cross-Sectional Area
 
