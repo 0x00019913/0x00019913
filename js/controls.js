@@ -93,7 +93,7 @@ Controls = function(camera, domElement, params) {
     dX = touchX-touchXprev;
     dY = touchY-touchYprev;
 
-    document.getElementById('main-wrapper').innerHTML = dX;
+    document.getElementById('main-wrapper').textContent = dX;
 
     handleLMB();
   }
