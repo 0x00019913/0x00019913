@@ -22,10 +22,11 @@ onFullScreenChange = function() {
   window.dispatchEvent(new Event('resize'));
 }
 
-document.addEventListener('webkitfullscreenchange', onFullScreenChange);
-document.addEventListener('mozfullscreenchange', onFullScreenChange);
-
-fullscreenButton.onclick = function() {
+// prevent cursor lock from mousedown/up events farther down the line
+onFSButtonMouseDown = function(e) { e.stopPropagation(); }
+onFSButtonMouseUp = function(e) { e.stopPropagation(); }
+// turn on fullscreen
+onFSButtonClick = function(e) {
   if (!headerFullscreen) {
     if (header.requestFullscreen) header.requestFullscreen();
     else if (header.webkitRequestFullScreen) header.webkitRequestFullScreen();
@@ -39,3 +40,9 @@ fullscreenButton.onclick = function() {
     else if (document.msExitFullscreen) document.msExitFullscreen();
   }
 }
+
+document.addEventListener('webkitfullscreenchange', onFullScreenChange);
+document.addEventListener('mozfullscreenchange', onFullScreenChange);
+fullscreenButton.addEventListener('mousedown', onFSButtonMouseDown, false);
+fullscreenButton.addEventListener('mouseup', onFSButtonMouseDown, false);
+fullscreenButton.addEventListener('click', onFSButtonClick, false);

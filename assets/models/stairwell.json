@@ -1,0 +1,133 @@
+{
+  "objects": {
+    "segments": {
+      "type": "array",
+      "object": [
+        "segment0"
+      ],
+      "count": 20,
+      "initOffset": 20000,
+      "offset": -4000,
+      "height": 20000
+    },
+    "segment0": {
+      "type": "composite",
+      "children": [
+        "wall",
+        "stair_set",
+        "pipes",
+        "grates",
+        "light0"
+      ],
+      "height": 4000
+    },
+
+    "wall": {
+      "type": "mesh",
+      "source": "/assets/models/wall.obj",
+      "material": "wall_material",
+      "height": 4000
+    },
+
+    "stair_set": {
+      "type": "composite",
+      "children": [
+        "stairs",
+        "stair_cables"
+      ],
+      "height": 4000
+    },
+    "stairs": {
+      "type": "mesh",
+      "source": "/assets/models/stairs.obj",
+      "material": "stairs_material",
+      "height": 4000
+    },
+    "stair_cables": {
+      "type": "mesh",
+      "source": "/assets/models/stair_cables.obj",
+      "material": "metal_material",
+      "height": 4000
+    },
+
+    "pipes": {
+      "type": "array",
+      "object": [
+        ["pipes0", 0.5 ],
+        ["pipes1", 0.5 ]
+      ],
+      "count": 4,
+      "offset": -1000,
+      "height": 4000
+    },
+    "pipes0": {
+      "type": "mesh",
+      "source": "/assets/models/pipes0.obj",
+      "material": "metal_material",
+      "height": 1000
+    },
+    "pipes1": {
+      "type": "mesh",
+      "source": "/assets/models/pipes1.obj",
+      "material": "metal_material",
+      "height": 1000
+    },
+
+    "grates": {
+      "type": "array",
+      "object": [
+        ["grate", 0.8],
+        ["", 0.2]
+      ],
+      "count": 2,
+      "offset": -2000,
+      "height": 4000
+    },
+    "grate": {
+      "type": "mesh",
+      "source": "/assets/models/grate.obj",
+      "material": "metal_material",
+      "height": 1000
+    },
+
+    "light0": {
+      "type": "pointlight",
+      "color": "#ffffff",
+      "intensity": 0.1,
+      "distance": 0,
+      "decay": 2,
+      "position": [400, 0, 400],
+      "height": 4000
+    }
+  },
+
+  "materials": {
+    "wall_material": {
+      "type": "standard",
+      "color": "#333333",
+      "roughness": 0.8,
+      "metalness": 0.1,
+      "map": "/assets/models/wall_textureColor.jpg",
+      "bumpMap": "/assets/models/wall_textureBump.jpg",
+      "bumpScale": 0.5
+    },
+    "stairs_material": {
+      "type": "standard",
+      "color": "#111111",
+      "roughness": 0.6,
+      "metalness": 0.4,
+      "map": "/assets/models/stair_textureColor.jpg",
+      "bumpMap": "/assets/models/stair_textureBump.jpg"
+    },
+    "metal_material": {
+      "type": "standard",
+      "color": "#333333",
+      "roughness": 0.7,
+      "metalness": 0.6
+    }
+  },
+
+  "config": {
+    "object": "segments"
+  }
+}
