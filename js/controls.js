@@ -251,8 +251,8 @@ Controls.prototype.setDefaults = function(type) {
 
     this.thetaRate = -0.02;
     this.phiRate = 0.02;
-    this.xPanRate = 0.5;
-    this.yPanRate = 0.5;
+    this.xPanRate = 0.01;
+    this.yPanRate = 0.01;
 
     this.rMin = epsilon;
     this.rMax = Infinity;

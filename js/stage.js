@@ -39,7 +39,8 @@ Stage.prototype.initViewport = function() {
     /* RENDER */
     _this.renderer = new THREE.WebGLRenderer({ antialias: true });
     _this.renderer.shadowMap.enabled = true;
-    //_this.renderer.toneMapping = THREE.ReinhardToneMapping;
+    _this.renderer.shadowMap.type = THREE.PCFShadowMap;
+    _this.renderer.toneMapping = THREE.ReinhardToneMapping;
     _this.renderer.setPixelRatio(window.devicePixelRatio);
     _this.renderer.setSize(width, height);
     _this.container.appendChild(_this.renderer.domElement);

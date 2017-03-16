@@ -6,7 +6,7 @@ excerpt: "Me."
 
 My name is a number.
 
-I like 3D. Educated in physics and computer science. 3D modeling hobbyist. Learning WebGL for personal projects and because it'll become a whole lot more relevant in the near future.
+I like 3D. Educated in physics and computer science, 3D modeling hobbyist, learning WebGL for personal projects and because it'll become a whole lot more relevant in the near future.
 
 Started up this brog because 1. it seems like a good impetus to periodically learn something new and write it up and 2. I've always wanted a decent personal page.
 

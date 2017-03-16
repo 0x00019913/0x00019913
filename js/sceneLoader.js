@@ -49,7 +49,7 @@ SceneLoader = function(scene, container, camera, physics) {
     // stairwell
     function() {
       var envGenerator = new EnvGenerator(_this.scene);
-      envGenerator.load('/assets/models/stairwell.json');
+      envGenerator.load('/assets/models/stairwell/stairwell.json');
 
       _this.scene.fog = new THREE.FogExp2(0x0, 0.0001);
       _this.scene.background = new THREE.Color(0x0);
@@ -61,6 +61,33 @@ SceneLoader = function(scene, container, camera, physics) {
           type: "PlayerCam",
           phi: Math.PI/8,
           theta: 5*Math.PI/7
+        }
+      });
+      _this.physics.addEntity(player);
+    },
+
+    // buildings
+    function() {
+      var envGenerator = new EnvGenerator(_this.scene);
+      envGenerator.load('/assets/models/buildings/buildings.json');
+
+      _this.scene.fog = new THREE.FogExp2(0xaaaaaa, 0.00022);
+      _this.scene.background = new THREE.Color(0xaaaaaa);
+
+      var player = new Entity("player", {
+        camera: _this.camera,
+        container: _this.container,
+        controlParams: {
+          type: "FreeCam",
+          r: 2000,
+          rmax: 2000,
+          rmin: 2000,
+          xPanRate: 0,
+          yPanRate: 0,
+          phiMin: Math.PI/2,
+          phiMax: 3*Math.PI/2,
+          phi: 7*Math.PI/8,
+          theta: 7*Math.PI/10
         }
       });
       _this.physics.addEntity(player);

@@ -24,7 +24,7 @@
 
     "wall": {
       "type": "mesh",
-      "source": "/assets/models/wall.obj",
+      "source": "/assets/models/stairwell/wall.obj",
       "material": "wall_material",
       "height": 4000
     },
@@ -39,13 +39,13 @@
     },
     "stairs": {
       "type": "mesh",
-      "source": "/assets/models/stairs.obj",
+      "source": "/assets/models/stairwell/stairs.obj",
       "material": "stairs_material",
       "height": 4000
     },
     "stair_cables": {
       "type": "mesh",
-      "source": "/assets/models/stair_cables.obj",
+      "source": "/assets/models/stairwell/stair_cables.obj",
       "material": "metal_material",
       "height": 4000
     },
@@ -62,13 +62,13 @@
     },
     "pipes0": {
       "type": "mesh",
-      "source": "/assets/models/pipes0.obj",
+      "source": "/assets/models/stairwell/pipes0.obj",
       "material": "metal_material",
       "height": 1000
     },
     "pipes1": {
       "type": "mesh",
-      "source": "/assets/models/pipes1.obj",
+      "source": "/assets/models/stairwell/pipes1.obj",
       "material": "metal_material",
       "height": 1000
     },
@@ -85,7 +85,7 @@
     },
     "grate": {
       "type": "mesh",
-      "source": "/assets/models/grate.obj",
+      "source": "/assets/models/stairwell/grate.obj",
       "material": "metal_material",
       "height": 1000
     },
@@ -107,8 +107,8 @@
       "color": "#333333",
       "roughness": 0.8,
       "metalness": 0.1,
-      "map": "/assets/models/wall_textureColor.jpg",
-      "bumpMap": "/assets/models/wall_textureBump.jpg",
+      "map": "/assets/models/stairwell/wall_textureColor.jpg",
+      "bumpMap": "/assets/models/stairwell/wall_textureBump.jpg",
       "bumpScale": 0.5
     },
     "stairs_material": {
@@ -116,8 +116,8 @@
       "color": "#111111",
       "roughness": 0.6,
       "metalness": 0.4,
-      "map": "/assets/models/stair_textureColor.jpg",
-      "bumpMap": "/assets/models/stair_textureBump.jpg"
+      "map": "/assets/models/stairwell/stair_textureColor.jpg",
+      "bumpMap": "/assets/models/stairwell/stair_textureBump.jpg"
     },
     "metal_material": {
       "type": "standard",

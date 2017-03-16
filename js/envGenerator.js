@@ -114,6 +114,7 @@ EnvGenerator.prototype.placeGeometry = function(objects, materials) {
       var obj = data.object;
       var pointLight = new THREE.PointLight(obj.color, obj.intensity, obj.distance, obj.decay);
       pointLight.position.fromArray(obj.position);
+
       for (var i=0; i<offsets.length; i++) {
         var light = pointLight.clone();
         light.position.y += offsets[i];
@@ -127,7 +128,9 @@ EnvGenerator.prototype.placeGeometry = function(objects, materials) {
     var offsets = data.offsets;
 
     r.traverse(function(child) {
-      if (child instanceof THREE.Mesh) child.material = material;
+      if (child instanceof THREE.Mesh) {
+        child.material = material;
+      }
     });
 
     for (var i=0; i<offsets.length; i++) {

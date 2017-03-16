@@ -1,0 +1,108 @@
+{
+  "objects": {
+    "world": {
+      "type": "composite",
+      "children": [
+        "segments",
+        "light0"
+      ],
+      "height": 6000
+    },
+    "segments": {
+      "type": "array",
+      "object": [
+        "segment"
+      ],
+      "count": 75,
+      "initOffset": 8000,
+      "offset": -200,
+      "heigth": 15000
+    },
+    "segment": {
+      "type": "composite",
+      "children": [
+        "wall",
+        "door",
+        "window_frames",
+        "curtains",
+        "stairs"
+      ],
+      "height": 200
+    },
+
+    "wall": {
+      "type": "mesh",
+      "source": "/assets/models/buildings/wall.obj",
+      "material": "wall_material",
+      "height": 200
+    },
+    "door": {
+      "type": "mesh",
+      "source": "/assets/models/buildings/door.obj",
+      "material": "frame_material",
+      "height": 200
+    },
+    "window_frames": {
+      "type": "mesh",
+      "source": "/assets/models/buildings/window_frames.obj",
+      "material": "frame_material",
+      "height": 200
+    },
+    "curtains": {
+      "type": "mesh",
+      "source": "/assets/models/buildings/curtains.obj",
+      "material": "curtain_material",
+      "height": 200
+    },
+    "stairs": {
+      "type": "mesh",
+      "source": "/assets/models/buildings/stairs.obj",
+      "material": "metal_material",
+      "height": 200
+    },
+
+    "light0": {
+      "type": "pointlight",
+      "color": "#ffffff",
+      "intensity": 5,
+      "distance": 0,
+      "decay": 2,
+      "position": [-1000, 0, 1500],
+      "height": 4000
+    }
+  },
+
+  "materials": {
+    "wall_material": {
+      "type": "standard",
+      "color": "#666666",
+      "roughness": 0.8,
+      "metalness": 0.0,
+      "map": "/assets/models/buildings/16Color.jpg",
+      "bumpMap": "/assets/models/buildings/16Bump.jpg",
+      "bumpScale": 0.5
+    },
+    "metal_material": {
+      "type": "standard",
+      "color": "#666666",
+      "roughness": 0.3,
+      "metalness": 1
+    },
+    "frame_material": {
+      "type": "standard",
+      "color": "#111111",
+      "roughness": 0.5,
+      "metalness": 0.7
+    },
+    "curtain_material": {
+      "type": "standard",
+      "color": "#ffffff",
+      "roughness": 0.3,
+      "metalness": 1
+    }
+  },
+
+  "config": {
+    "object": "world"
+  }
+}
