@@ -45,10 +45,10 @@ html, body {
   -webkit-transition:  opacity 200ms ease, background-image 200ms ease;
 }
 #fullscreen-button.enter {
-  background-image: url('/assets/fullscreen.png');
+  background-image: url('/assets/img/fullscreen.png');
 }
 #fullscreen-button.exit {
-  background-image: url('/assets/fullscreen_exit.png');
+  background-image: url('/assets/img/fullscreen_exit.png');
 }
 #fullscreen-button:hover {
   opacity: 1;
@@ -177,7 +177,7 @@ a:hover {
   width: 32px;
   height: 32px;
   margin: 75px auto 0;
-  background-image: url('/assets/logo.png');
+  background-image: url('/assets/img/logo.png');
   opacity: 0.25;
 }
 

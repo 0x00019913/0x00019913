@@ -10,7 +10,7 @@ date: 2017-03-08 02:10:00
 The original impetus for writing <a href="https://0x00019913.github.io/meshy/">meshy</a> was that I had no nice tool for calculating the center of mass of a 3D mesh (of uniform density, implicitly). This model is the specific reason - it turned out the center of mass was way out of alignment with the place where the chain hooks into the orbital bones, so it ends up pitching backward if one doesn't hook it to the chain by the horns:
 
 <div class="img-box">
-  <img class="lim300" src="/assets/antelope.jpg" />
+  <img class="lim300" src="/assets/img/antelope.jpg" />
   <div class="img-caption">Antelope pendant.</div>
 </div>
 

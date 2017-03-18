@@ -14,7 +14,7 @@ So I was reading about simplex noise <a href="http://weber.itn.liu.se/~stegu/sim
 Here's the diagram from the paper:
 
 <div class="img-box">
-  <img src="/assets/skew.png" />
+  <img src="/assets/img/skew.png" />
   <div class="img-caption">Skewing the grid.</div>
 </div>
 

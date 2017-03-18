@@ -8,10 +8,15 @@
 
 Physics = function() {
   this.entities = [];
+  this.animations = [];
 }
 
 Physics.prototype.addEntity = function(entity) {
   this.entities.push(entity);
+}
+
+Physics.prototype.addAnimation = function(animation) {
+  this.animations.push(animation);
 }
 
 Physics.prototype.iterate = function(dt) {
@@ -20,6 +25,9 @@ Physics.prototype.iterate = function(dt) {
     if (entity.type=="player") {
       entity.controls.update();
     }
+  }
+  for (var i=0; i<this.animations.length; i++) {
+    this.animations[i]();
   }
 }
 
