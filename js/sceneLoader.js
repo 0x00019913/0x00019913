@@ -323,7 +323,7 @@ void main() { \
   vec3 color = mix(color0, color1, level); \
   color *= color*2.0; \
   color += 1.5*clamp(vPos.y/noiseScale.y * 10.0 - 5.3, 0.0, 1.0)*color0; \
-  gl_FragColor = vec4(clamp(color, 0.0, 1.0), 0.0); \
+  gl_FragColor = vec4(color, 0.0); \
 }";
 
 var sun_vert = " \
