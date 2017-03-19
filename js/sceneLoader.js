@@ -193,7 +193,6 @@ SceneLoader = function(scene, container, camera, physics) {
           theta: 5.5*Math.PI/8,
           phiRate: 0,
           thetaRate: 0,
-          rRate: 0,
           xPanRate: 0,
           yPanRate: 0
         }
@@ -318,14 +317,12 @@ void main() { \
   float noiseSub = 0.2*fbm(vPos+subOffset, 2.0, 0.5); \
   intensity -= noiseSub; \
   vec3 level = clamp(vec3(intensity), 0.0, 1.0); \
-  level = sqrt(level)*1.3; \
   /* sky color */ \
-  vec3 color0 = 0.4*vec3(0.3, 0.08, 0.07); \
+  vec3 color0 = 0.20*vec3(0.3, 0.08, 0.07); \
   /* cloud color */ \
-  vec3 color1 = 0.5*vec3(0.87, 0.62, 0.39); \
-  vec3 color = mix(color0, color1, level); \
-  color *= color*5.0; \
-  color += 2.5*clamp(vPos.y/noiseScale.y * 7.0 - 3.6, 0.0, 1.0)*color0; \
+  vec3 color1 = 0.6*vec3(0.86, 0.44, 0.15); \
+  vec3 color = 3.0*mix(color0, color1, level); \
+  color += 3.3*clamp(vPos.y/noiseScale.y * 7.0 - 4.0, 0.0, 1.0)*color0; \
   gl_FragColor = vec4(color, 0.0); \
 }";
 

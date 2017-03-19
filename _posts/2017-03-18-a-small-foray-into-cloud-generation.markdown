@@ -47,12 +47,14 @@ Better!
 
 ### Colors
 
-After this, all I did was a few empirically determined transformations on the resulting intensity to get it into the right color range. First, use the noise to interpolate between a sky color and a cloud color. Then square the color value (element-wise) because I found that it makes for more vivid colors. Then add a linear gradient (an approximation for haze), which is just the cloud color proportional to the y-value of the object-space position.
+After this, all I did was a few empirically determined transformations on the resulting intensity to get it into the right color range. First, clamp the noise value (see below). Then use the noise to interpolate between a sky color and a cloud color. Then add a linear gradient (an approximation for haze), which is just the cloud color proportional to the y-value of the object-space position.
+
+Looks a bit like an atmosphere of Cheeto dust, but still nifty.
 
 ### Making the clouds change
 
 As described, the noise would just move linearly and never change. I found that this looks fairly boring, so I generated a second noise, set it to move at a slightly different rate, and subtracted it from the original noise. And voilà! The clouds ripple and dissipate.
 
-P.S. At present, there's a bug with this shader. I'm writing and testing this all in my Ubuntu VM (Firefox and Chrome), but not in Windows. After committing and pushing, I discovered that in Windows the clouds are visible but the sky color is not. Will fix as soon as I set up the Jekyll server in Windows.
+### A curious inconsistency
 
-Also, TODO is disable the header for mobile because it definitely doesn't work without a GPU.
+I've been writing and testing this all in my Ubuntu VM (Chrome and Firefox). After I made the clouds all pretty-like and pushed, I looked at the header in Windows and discovered something weird - the clouds were there, but the sky was totally black. It appears that, whether this is a driver thing or an Ubuntu thing, the colors got clamped automatically to the [0,1] range for some set of calculations, while on Windows they were allowed to go negative, creating a black sky. The solution was to clamp the initial noise values and then redo the entire setup with different constants.
