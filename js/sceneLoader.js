@@ -325,7 +325,7 @@ void main() { \
   vec3 color1 = 0.5*vec3(0.87, 0.62, 0.39); \
   vec3 color = mix(color0, color1, level); \
   color *= color*5.0; \
-  color += 2.5*clamp(vPos.y/noiseScale.y * 10.0 - 5.5, 0.0, 1.0)*color0; \
+  color += 2.5*clamp(vPos.y/noiseScale.y * 7.0 - 3.6, 0.0, 1.0)*color0; \
   gl_FragColor = vec4(color, 0.0); \
 }";
 
