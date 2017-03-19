@@ -7,7 +7,7 @@ excerpt: "An approach to making moving clouds."
 date: 2017-03-18 14:32:00
 ---
 
-I've never played with noise algorithms, but, what with learning Cinema 4D and all, I've gotten to see lots of awesome procedurally generated noise. So I figured I'd try my hand at it.
+I've never played with noise algorithms, but, what with learning Cinema 4D and all, I've gotten to see lots of awesome noise and procedurally generated patterns. So I figured I'd try my hand at it.
 
 One of the two (at the time of writing) headers I have here is inspired by that scene near the end of Code Geass (search for the "obey me, world" speech and prepare for spoilers) with the chess piece under an epic-looking red sky. The hard part, of course, was making the clouds look at least modestly cloudlike. The solution turned out to be 2D simplex noise fed into an FBM function with seven octaves.
 
