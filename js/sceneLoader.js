@@ -193,6 +193,7 @@ SceneLoader = function(scene, container, camera, physics) {
           theta: 5.5*Math.PI/8,
           phiRate: 0,
           thetaRate: 0,
+          rRate: 0,
           xPanRate: 0,
           yPanRate: 0
         }
