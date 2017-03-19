@@ -52,3 +52,7 @@ After this, all I did was a few empirically determined transformations on the re
 ### Making the clouds change
 
 As described, the noise would just move linearly and never change. I found that this looks fairly boring, so I generated a second noise, set it to move at a slightly different rate, and subtracted it from the original noise. And voilà! The clouds ripple and dissipate.
+
+P.S. At present, there's a bug with this shader. I'm writing and testing this all in my Ubuntu VM (Firefox and Chrome), but not in Windows. After committing and pushing, I discovered that in Windows the clouds are visible but the sky color is not. Will fix as soon as I set up the Jekyll server in Windows.
+
+Also, TODO is disable the header for mobile because it definitely doesn't work without a GPU.
