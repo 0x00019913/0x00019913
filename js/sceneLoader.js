@@ -287,8 +287,9 @@ float fbm(vec2 v, float lacunarity, float gain) { \
   float sum = 0.0; \
   float amp = 1.0; \
   float freq = 1.0; \
-  /* Fun story. Apparently, putting this stuff in a loop causes the function \
-      to return 0 every time. Why, GLSL, why? So I unwrapped it to 7 octaves. */ \
+  /* Fun story. In my Ubuntu VM, putting the simplex() call in a loop causes \
+     the shader to render black every time. Works fine on Windows. Why, GLSL, \
+     why? So I unwrapped it to 7 octaves. */ \
   sum += amp * simplex(v * freq); \
   freq *= lacunarity; \
   amp *= gain; \
