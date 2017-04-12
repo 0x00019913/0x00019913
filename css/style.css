@@ -136,13 +136,13 @@ a:hover {
 .post-body a:hover {
   color: #6D7A92;
 }
-.post-body ul {
-  list-style-type: decimal;
-}
 .post-body #markdown-toc {
   background-color: #f8f8f8;
   border: 1px solid #ddd;
   margin: 25px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  list-style-type: decimal;
 }
 
 .img-box {
