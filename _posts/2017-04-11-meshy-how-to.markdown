@@ -52,7 +52,7 @@ Neither STL nor OBJ files have intrinsic units. I hear software will often inter
 
 N-gons in OBJ files are disallowed (i.e., `meshy` grabs at most the first four vertices of a given face and ignores the rest). Quads are allowed, but triangulated.
 
-Technical note: There's an endinanness switch under Settings > Technical, which indicates the assumed endianness of the imported mesh.
+Technical note: there's an endianness switch under Settings > Technical, which indicates the assumed endianness of the imported mesh.
 
 # Export
 
@@ -66,7 +66,7 @@ OBJ files will export a list of vertices and a list of triangles. Quads are not 
 
 The user can toggle the axis widget and the floor grid.
 
-(Probably irrelevant for all cases but should still be documented: under Settings > Technical is a "vertex precision" field, set to 5 by default. This is used for importing STL files - I'm using a hash table to get a list of unique vertices from a list of faces. [(See here for details.)]({{ site.baseurl }}{% post_url 2017-03-08-meshy-design-notes %}) Basically, a 3-vector like `[1.28573568, 0.00584586, 10.86187359]` turns into a hash like `"128574_585_1086187"`. More precision means more digits - increasing this number makes long hashes, decreasing it might incorrectly merge vertices. If your mesh is very, very small, you might need to increase this precision.)
+(Probably irrelevant for all cases but should still be documented: under Settings > Technical is a "vertex precision" field, set to 5 by default. This is used for importing STL files - I'm using a hash table to get a list of unique vertices from a list of faces. [(See here for details.)]({{ site.baseurl }}{% post_url 2017-03-08-meshy-design-notes %}) A 3-vector like `[1.28573568, 0.00584586, 10.86187359]` turns into a hash like `"128574_585_1086187"`. More precision means more digits - increasing this number makes long hashes, decreasing it might incorrectly merge vertices. If your mesh is very, very small, you might need to increase this precision.)
 
 # Mesh Display
 
@@ -103,7 +103,7 @@ Scale the mesh by a given factor on one axis at a time or all at once.
 
 ### To size
 
-Scale the mesh to the given size on an axis; if the `scaleOnAllAxes` checkbox is checked, the model will be scaled on the other two axes, `meshy` will apply the scaling to the other axes as well.
+Scale the mesh to the given size on an axis; if the `scaleOnAllAxes` checkbox is checked, `meshy` will apply the same scaling to the other axes.
 
 ### To measurement
 
