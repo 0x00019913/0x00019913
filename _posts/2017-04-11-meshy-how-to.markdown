@@ -40,7 +40,7 @@ The printout area next to the axis widget indicates status changes, events, and 
 
 # Import
 
-Supported file formats are OBJ and binary STL (as opposed to ASCII STL). There appears to be a rough upper limit of 50MB on the upload size, which is in the neighborhood of what you'd use for 3D printing. I've been able to load meshes with around 1-2 million polygons. It depends on your browser and computer. If the page hangs, the file's too big.
+Supported file formats are OBJ and binary STL (as opposed to ASCII STL). There appears to be a rough upper limit of 50-80MB on the upload size, which is in the neighborhood of what you'd use for 3D printing. I've been able to load meshes with around 1-2 million polygons. It depends on your browser and computer. If the page hangs, the file's too big.
 
 ## Note on units
 
