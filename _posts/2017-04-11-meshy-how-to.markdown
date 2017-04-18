@@ -158,9 +158,19 @@ Takes 3 markers, which specify a circle in 3-space; measures radius, diameter, c
 
 Takes 1 marker; measures the cross-sectional area in the plane normal (perpendicular) to the given axis. Note that this measurement is deactivated by rotating on any other axis.
 
+# Repair (beta)
+
+Patches holes surrounded by loops of edges that each border one triangle. First, generate the patch with `generatePatch`, which will fill in holes with preview (green) geometry. Then either accept it to integrate it into the model or cancel the patch. This is not undoable.
+
+This algorithm is new and may throw errors (or just fail to patch something). Do let me know via email (0x00019913@gmail.com) or <a href="https://github.com/0x00019913/meshy">on the repo</a> and send me the model in question.
+
+For a broad overview of how it works, see "A robust hole-filling algorithm for triangular mesh", Zhao, Gao, Lin, 2007.
+
 # Undo
 
 *Only the actions under the Transform folder are undoable.* This is because 1. the memory limitations of the typical browser make a more robust undo stack not generally feasible and 2. the sequence of actions performed in `meshy` would, by and large, be minimal and easily replicated in case of a faux pas.
+
+`Ctrl+Z` triggers the undo.
 
 # Delete
 
