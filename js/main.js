@@ -1,13 +1,16 @@
+var header = document.getElementById("header");
+
 // mobile detector; don't load WebGL if we're on mobile as it can freeze a phone
 var md = new MobileDetect(window.navigator.userAgent);
 if (!md.mobile()) {
   // if not mobile, load the stage
   var stage = new Stage();
 }
+else {
+  header.style.display = "none";
+}
 
 var headerFullscreen = false;
-
-var header = document.getElementById("header");
 var fullscreenButton = document.getElementById("fullscreen-button");
 
 
