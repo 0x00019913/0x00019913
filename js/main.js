@@ -1,4 +1,9 @@
-var stage = new Stage();
+// mobile detector; don't load WebGL if we're on mobile as it can freeze a phone
+var md = new MobileDetect(window.navigator.userAgent);
+if (!md.mobile()) {
+  // if not mobile, load the stage
+  var stage = new Stage();
+}
 
 var headerFullscreen = false;
 
