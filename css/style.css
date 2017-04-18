@@ -98,7 +98,7 @@ a:hover {
 }
 
 /* posts */
-.post {
+#post {
   background-color: #fff;
   padding: 30px;
   margin-top: -200px;
