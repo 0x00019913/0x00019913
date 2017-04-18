@@ -8,7 +8,7 @@ if (!md.mobile()) {
 }
 else {
   header.style.display = "none";
-  document.getElementById("main-wrapper").style.top = "0";
+  document.getElementById("main-wrapper").style.top = "200px";
 }
 
 var headerFullscreen = false;
