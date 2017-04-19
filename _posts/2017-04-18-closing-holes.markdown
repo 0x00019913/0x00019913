@@ -9,6 +9,11 @@ date: 2017-04-18 19:56:00
 
 I recently finished implementing a hole-closing mechanism on top of `three.js` geometry and math types. The algorithm is based on the first few sections of "A robust hole-filling algorithm for triangular mesh" (<a href="https://pdfs.semanticscholar.org/1b95/a4e90ef89a5bdf224ade07eac7cb0bd6f717.pdf">Zhao, W., Gao, S. & Lin, H. Visual Comput (2007) 23: 987. doi:10.1007/s00371-007-0167-y</a>), filling the unstated implementation details within the constraints of computing everything in a browser. I will explain more in words than in code because there's a lot of code. I'll write the code in a nonspecific combination of pseudocode and JS.
 
+<div class="img-box">
+  <img src="/assets/img/close-holes.jpg" />
+  <div class="img-caption">A mesh, the same mesh with some holes, and the patch.</div>
+</div>
+
 The algorithm is superficially simple: find cycles of boundary vertices (vertices that border holes), then, for each cycle, fill in the hole by advancing the front of vertices into the hole according to the above paper's Fig. 3.
 
 ## Terminology (obvious if familiar with three.js, feel free to skip)
@@ -100,11 +105,13 @@ Two key points above are unspecified in the paper, so I came up with makeshift h
 
 After forming one or more faces at each step, we must update `cycle` (we either destroyed a vertex, replaced a vertex with another, or added one), `angles` (calculate new angles for the verts that underwent changes), and `normals`. There's a fiddly aspect to recalculating normals: so we have a vertex with a normal, and we add a face that's adjacent to it - how do we adjust its normal? I decided that I'd add the old normal plus the new one, each weighted by its angle contribution at the vertex. Unfortunately, this wasn't enough; I had to double the angle contribution from the new face, so the normal is biased slightly toward the new face. I regrettably don't have a solid justification for this, except that it works. I believe this is all right because the new face is never going to have a large angle at the vertex anyway, so doubling its contribution doesn't break the algorithm.
 
-## Results
+## Conclusion
+
+The results are... not pretty. :P This is because the algorithm is a deterministic but not at all organized process that varies strongly with the exact topology of the hole, and biasing the new vertices toward the center only slightly helps the problem. I'm thinking it will work to put in some sort of relaxation scheme constrained at the boundary to achieve a "stretched shrink wrap" effect like what ZBrush does:
 
 <div class="img-box">
-  <img src="/assets/img/close-holes.jpg" />
-  <div class="img-caption">A mesh, the same mesh with some holes, and the patch.</div>
+  <img src="/assets/img/close-holes2.jpg" />
+  <div class="img-caption">ZBrush hole-closing algorithm.</div>
 </div>
 
-The results are... not pretty. :P This is because the algorithm is a deterministic but not at all organized process that varies strongly with the exact topology of the hole, and biasing the new vertices toward the center only slightly helps the problem. The original paper gives a fix that involves rebuilding the resulting patch by solving a Poisson equation, but I'll likely never do that - the point of putting this thing into `meshy` was to give it *some* form of mesh repair until I put in a better (voxel-based) remeshing algorithm.
+The original paper gives a fix that involves rebuilding the resulting patch by solving a Poisson equation, but I'll likely never do that - the point of putting this thing into `meshy` was to give it *some* form of mesh repair until I put in a better (voxel-based) remeshing algorithm.
