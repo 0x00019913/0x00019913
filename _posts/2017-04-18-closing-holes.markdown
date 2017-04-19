@@ -100,6 +100,11 @@ Two key points above are unspecified in the paper, so I came up with makeshift h
 
 After forming one or more faces at each step, we must update `cycle` (we either destroyed a vertex, replaced a vertex with another, or added one), `angles` (calculate new angles for the verts that underwent changes), and `normals`. There's a fiddly aspect to recalculating normals: so we have a vertex with a normal, and we add a face that's adjacent to it - how do we adjust its normal? I decided that I'd add the old normal plus the new one, each weighted by its angle contribution at the vertex. Unfortunately, this wasn't enough; I had to double the angle contribution from the new face, so the normal is biased slightly toward the new face. I regrettably don't have a solid justification for this, except that it works. I believe this is all right because the new face is never going to have a large angle at the vertex anyway, so doubling its contribution doesn't break the algorithm.
 
-## Conclusion
+## Results
 
-The results are... quite ugly. This is because the algorithm is a deterministic but not at all organized process that varies strongly with the exact topology of the hole, and biasing the new vertices toward the center only slightly helps the problem. The original paper gives a fix that involves rebuilding the resulting patch by solving a Poisson equation, but I'll likely never do that - the point of putting this thing into `meshy` was to give it *some* form of mesh repair until I put in a better (voxel-based) remeshing algorithm.
+<div class="img-box">
+  <img src="/assets/img/close-holes.jpg" />
+  <div class="img-caption">A mesh, the same mesh with some holes, and the patch.</div>
+</div>
+
+The results are... not pretty. :P This is because the algorithm is a deterministic but not at all organized process that varies strongly with the exact topology of the hole, and biasing the new vertices toward the center only slightly helps the problem. The original paper gives a fix that involves rebuilding the resulting patch by solving a Poisson equation, but I'll likely never do that - the point of putting this thing into `meshy` was to give it *some* form of mesh repair until I put in a better (voxel-based) remeshing algorithm.
