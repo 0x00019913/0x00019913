@@ -114,7 +114,7 @@ Now we get this:
 
 ## 5. Prettifying the patch
 
-The results, as seen in Fig. 2, are not pretty. Ideally, we'd come up with some scheme that either just smooths the entire patch, constraining it at the surface, or one that intelligently adapts it to the surrounding geometry. The first method is presumably what ZBrush uses in *their* analogous algorithm:
+The results, as seen on the left of Fig. 2, are not pretty. Ideally, we'd come up with some scheme that either just smooths the entire patch, constraining it at the boundary, or one that intelligently adapts it to the surrounding geometry. The first method is presumably what ZBrush uses in its analogous algorithm:
 
 <div class="img-box">
   <img src="/assets/img/zbrush-close-holes.jpg" />
