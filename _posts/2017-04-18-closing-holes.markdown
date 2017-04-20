@@ -20,7 +20,7 @@ The algorithm is superficially simple: find cycles of boundary vertices (vertice
 
 A "vertex" (plural: "vertices", not "vertexes") will be represented by a `THREE.Vector3` object. Each of these contains three floating-point numbers and a pile of useful functions in its prototype (`dot`, `cross`, `normalize`, and so on).
 
-"Face" will denote a triangle represented by a `THREE.Face3` object. This object's contents relevant to the current discussion are three indices into a vertex array and a vector signifying the normal. The normal is assumed to be normalized.
+"Face" will denote a triangle represented by a `THREE.Face3` object. This object's contents relevant to the current discussion are three indices into a vertex array and a vector signifying the normal. The normal is assumed to be normalized. Faces always follow a CCW winding order: looking along the negative normal, index `b` is CCW from `a` and `c` is CCW from `b`.
 
 "Edge" will denote a (usually ordered) pair of vertices or, equivalently, the vector between them: if the vertices are `v1` and `v2`, the edge "from v1 to v2" is `v2-v1`.
 
@@ -36,7 +36,7 @@ First, we'll build a hash table containing adjacency information for the vertice
 adjacencyMap[hash] = {
   neighbors = [...],
   normal = vector,
-  direction = [...]
+  windingOrder = [...]
 }
 ```
 
@@ -44,17 +44,11 @@ adjacencyMap[hash] = {
 
 `normal` is the normal vector at the vertex (see below for details).
 
-`direction` is calculated as follows. Given two vertices `v1` and `v2` which are part of face `f` with normal `n` and a third vertex `v3`, an entry of `direction` corresponding to `v2` in `v1`'s adjacency map entry is
+`windingOrder` corresponding to neighbor `v1` in the hash table entry for vertex `v` is computed thusly: it is `1` if `v1` is CCW from `v` when looking along the negative face normal; else it's `-1`. This simply tell us whether the geometry is on the left or the right. I originally had a complicated calculation for this along the lines of ```sign( ((v2-v1) cross n) dot (v3-v1) )```, which computed the same thing, until I realized that you can just figure it out from the order of face indices.
 
-```
-sign( ((v2-v1) cross n) dot (v3-v1) )
-```
+(If one were in the mood to optimize, one would note that every entry in the `windingOrder` is really a single bit, in our scheme holding the value of `1` or `-1`; one could replace the whole thing with a bitmap, making storage more efficient).
 
-First, the `(v2-v1) cross n` term is a vector either pointing into `f` or out of it; looking along the negative normal with the `(v2-v1)` vector pointing up, this cross product will point right. The dot product determines whether this term has a positive component along either of the edges into `v3`. The `sign` function returns `1` if its argument is positive and `-1` otherwise. The direction effectively lets us see where the faces lie relative to an edge. This means we don't have to store a list of faces adjacent to every vertex. This is equivalent to storing the winding order along an edge.
-
-(If one were in the mood to optimize, one would note that every entry in the `direction` is really a single bit, in our scheme holding the value of `1` or `-1`; one could replace the whole thing with a bitmap, making storage more efficient).
-
-In practice, one would implement this structure by iterating over the array of faces and adding an entry to the adjacency map for every pair of vertices in the face (given one vertex, add both of its neighbors to its hash table entry and calculate the two corresponding `direction` values).
+In practice, one would implement this structure by iterating over the array of faces and adding an entry to the adjacency map for every pair of vertices in the face (given one vertex, add both of its neighbors to its hash table entry and calculate the two corresponding `windingOrder` values).
 
 There's a problematic bit here with calculating the vertex normal. How do? Ideally, I want the vertex normal to always have a positive component along the face normals of every adjacent face. There are three dominant options, according to a perusal of StackOverflow:
 
@@ -70,9 +64,9 @@ Now, 1 is the simple version; however, it's easy to think of a scenario where th
 
 ## 2. Extracting the border vertices
 
-Note that the `direction` entry for the edge from `v1` to `v2` on face `f` will have the opposite sign than the corresponding entry for the same edge from an *adjacent* face. This means that, if we add the `direction` values for every edge, we will only have nonzero `direction` entries on edges that border an odd number of faces; assuming there are no edges bordering more than two vertices, we can use this fact to find the boundary vertices.
+Note that the `windingOrder` entry for the edge from `v1` to `v2` on face `f` will have the opposite sign than the corresponding entry for the same edge from an *adjacent* face. This means that, if we add the `windingOrder` values for every edge, we will only have nonzero `windingOrder` entries on edges that border an odd number of faces; assuming there are no edges bordering more than two vertices, we can use this fact to find the boundary vertices.
 
-We now either modify the original hash table or build a second one - we will refer to the structure containing the border vertices as the "border vertex map". This thing will have an entry for every vertex that has at least one nonzero `direction` entry in its adjacency map entry. Note that, for every hole bordering a vertex, the vertex will have two outgoing edges with nonzero `direction` entries; so the number of holes adjacent to a vertex will be the half its number of nonzero `direction` entries.
+We now either modify the original hash table or build a second one - we will refer to the structure containing the border vertices as the "border vertex map". This thing will have an entry for every vertex that has at least one nonzero `windingOrder` entry in its adjacency map entry. Note that, for every hole bordering a vertex, the vertex will have two outgoing edges with nonzero `windingOrder` entries; so the number of holes adjacent to a vertex will be the half its number of nonzero `windingOrder` entries.
 
 ## 3. Extracting cycles of boundary vertices
 
@@ -80,13 +74,13 @@ This is the hard part.
 
 Now, the basic algorithm is simple: pick a random vertex from our set of boundary vertices, find a neighbor on the boundary, and keep walking forward along its neighbors until we hit the starting vertex.
 
-*But what happens if we have vertices that border multiple holes?* We might take the wrong turn at such a vertex, and this could lead to a rich plethora of problems which, while deterministic, are pretty much random from a user's perspective. Back when I didn't have the `direction` array above, I came up with a few exotic solutions. Among those was a function that did minimal patching of every vertex bordering multiple holes such that the holes would become isolated from each other; after this, you'd be able to do the simple scheme above. But everything I tried started feeling like a tower of duct tape, and duct tape begets errors.
+*But what happens if we have vertices that border multiple holes?* We might take the wrong turn at such a vertex, and this could lead to a rich plethora of problems which, while deterministic, are pretty much random from a user's perspective. Back when I didn't have the `windingOrder` array above, I came up with a few exotic solutions. Among those was a function that did minimal patching of every vertex bordering multiple holes such that the holes would become isolated from each other; after this, you'd be able to do the simple scheme above. But everything I tried started feeling like a tower of duct tape, and duct tape begets errors.
 
 Additionally, there's the issue of winding order. To fill the hole with faces, we need to wind them correctly (CCW in `three.js`'s case), so it would very much help if we wound the cycle of boundary edges in a consistent way. Let's say that henceforth we're winding CW.
 
-The `direction` array provides easy-ish fixes to both quandaries and lets us implement the following scheme:
+The `windingOrder` array provides easy-ish fixes to both quandaries and lets us implement the following scheme:
 
-To start constructing a cycle, find a vertex that borders only one hole - this should always exist if there are more vertex cycles to be found. Pick one of its neighbors and check the `direction` of that edge. The sign of the direction tells us whether the adjacent face is on the left or right when looking along the negative normal. If the face is on the left, that means we're winding CW and everything is correct; if it's on the right, we choose the other neighbor of the current vertex instead. Then we just proceed along the cycle as in the basic algorithm.
+To start constructing a cycle, find a vertex that borders only one hole - this should always exist if there are more vertex cycles to be found. Pick one of its neighbors and check the `windingOrder` of that edge. The sign of the winding order tells us whether the adjacent face is on the left or right when looking along the negative normal. If the face is on the left, that means we're winding CW and everything is correct; if it's on the right, we choose the other neighbor of the current vertex instead. Then we just proceed along the cycle as in the basic algorithm.
 
 When we encounter a vertex bordering multiple holes, we need to do some magic. The scheme here is like this: take all the outflowing edges from the current vertex and project out their component along the normal. So we now have an axis (the normal) with a fan of edges (orthogonal to the axis) flowing out of the vertex. Now just calculate the angles of the edges with respect to the edge going to the previous vertex; pick the first edge that's CCW from the previous edge. That edge will correspond to the correct next vertex.
 
