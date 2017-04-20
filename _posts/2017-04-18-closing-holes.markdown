@@ -10,8 +10,8 @@ date: 2017-04-18 19:56:00
 I recently finished implementing a hole-closing mechanism on top of `three.js` geometry and math types. The algorithm is based on the first few sections of "A robust hole-filling algorithm for triangular mesh" (<a href="https://pdfs.semanticscholar.org/1b95/a4e90ef89a5bdf224ade07eac7cb0bd6f717.pdf">Zhao, W., Gao, S. & Lin, H. Visual Comput (2007) 23: 987. doi:10.1007/s00371-007-0167-y</a>), filling the unstated implementation details within the constraints of computing everything in a browser. I will explain more in words than in code because there's a lot of code. I'll write the code in a nonspecific combination of pseudocode and JS.
 
 <div class="img-box">
-  <img src="/assets/img/close-holes.jpg" />
-  <div class="img-caption">A mesh, the same mesh with some holes, and the patch.</div>
+  <img src="/assets/img/close-holes1.jpg" />
+  <div class="img-caption">Fig. 1: A mesh (left), the same mesh with some holes (right).</div>
 </div>
 
 The algorithm is superficially simple: find cycles of boundary vertices (vertices that border holes), then, for each cycle, fill in the hole by advancing the front of vertices into the hole according to the above paper's Fig. 3.
@@ -105,13 +105,24 @@ Two key points above are unspecified in the paper, so I came up with makeshift h
 
 After forming one or more faces at each step, we must update `cycle` (we either destroyed a vertex, replaced a vertex with another, or added one), `angles` (calculate new angles for the verts that underwent changes), and `normals`. There's a fiddly aspect to recalculating normals: so we have a vertex with a normal, and we add a face that's adjacent to it - how do we adjust its normal? I decided that I'd add the old normal plus the new one, each weighted by its angle contribution at the vertex. Unfortunately, this wasn't enough; I had to double the angle contribution from the new face, so the normal is biased slightly toward the new face. I regrettably don't have a solid justification for this, except that it works. I believe this is all right because the new face is never going to have a large angle at the vertex anyway, so doubling its contribution doesn't break the algorithm.
 
-## Conclusion
-
-The results are... not pretty. :P This is because the algorithm is a deterministic but not at all organized process that varies strongly with the exact topology of the hole, and biasing the new vertices toward the center only slightly helps the problem. I'm thinking it will work to put in some sort of relaxation scheme constrained at the boundary to achieve a "stretched shrink wrap" effect like what ZBrush does:
+Now we get this:
 
 <div class="img-box">
   <img src="/assets/img/close-holes2.jpg" />
-  <div class="img-caption">ZBrush hole-closing algorithm.</div>
+  <div class="img-caption">Fig. 2: A rough patch (left), a smoothed patch (right).</div>
 </div>
 
-The original paper gives a fix that involves rebuilding the resulting patch by solving a Poisson equation, but I'll likely never do that - the point of putting this thing into `meshy` was to give it *some* form of mesh repair until I put in a better (voxel-based) remeshing algorithm.
+## 5. Prettifying the patch
+
+The results, as seen in Fig. 2, are not pretty. Ideally, we'd come up with some scheme that either just smooths the entire patch, constraining it at the surface, or one that intelligently adapts it to the surrounding geometry. The first method is presumably what ZBrush uses in *their* analogous algorithm:
+
+<div class="img-box">
+  <img src="/assets/img/zbrush-close-holes.jpg" />
+  <div class="img-caption">Fig. 3: ZBrush hole-closing algorithm.</div>
+</div>
+
+It looks kinda like a piece of shrink wrap stretched between the border vertices. Maybe their way involves minimizing geodesic distances or something. The way I implemented something similar in `meshy` was simple: for every individual patch, take the vertices that aren't on the border and set them to the average of their neighbors. Iterate until happy. One does have to take care around arrays of unique vertex references to ensure that, on any given iteration, one vertex's new position doesn't go into the calculation of another vertex's new position.
+
+## Conclusion
+
+The original paper gives a fix to the roughness problem that involves rebuilding the resulting patch by solving a Poisson equation, but I'll likely never do that - the point of putting this thing into `meshy` was to give it *some* form of mesh repair until I put in a better (voxel-based) remeshing algorithm. Provided this algorithm doesn't throw errors, it's actually fairly robust - it should close any hole, provided it's not too convex.
