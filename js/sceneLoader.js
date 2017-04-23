@@ -322,7 +322,7 @@ void main() { \
   /* sky color */ \
   vec3 color0 = 0.20*vec3(0.3, 0.08, 0.07); \
   /* cloud color */ \
-  vec3 color1 = 0.6*vec3(0.86, 0.44, 0.15); \
+  vec3 color1 = 0.6*vec3(0.94, 0.60, 0.40); \
   vec3 color = 3.0*mix(color0, color1, level); \
   color += 3.3*clamp(vPos.y/noiseScale.y * 7.0 - 4.0, 0.0, 1.0)*color0; \
   gl_FragColor = vec4(color, 0.0); \
