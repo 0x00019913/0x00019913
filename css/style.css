@@ -113,6 +113,11 @@ a:hover {
   width: 100%;
 }
 
+.post-header .back-header {
+  width: 100%;
+  text-align: center;
+}
+
 .post-header h1 {
   color: #666;
 }

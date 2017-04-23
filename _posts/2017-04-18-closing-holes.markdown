@@ -26,7 +26,7 @@ A "vertex" (plural: "vertices", not "vertexes") will be represented by a `THREE.
 
 ## Setup
 
-Our starting data structures look like this: an array of `THREE.Vector3`s representing the mesh's vertices and an array of `THREE.Face3`s, each representing a face with its vertices among the vertex array. The vertices are assumed to be unique. We have no representation of edges.
+Our starting data structures look like this: an array of `THREE.Vector3`s representing the mesh's vertices and an array of `THREE.Face3`s, each representing a face with its vertices among the vertex array. The vertices are assumed to be unique. We have no explicit representation of edges.
 
 ## 1. Make an adjacency map
 
