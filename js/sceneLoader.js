@@ -95,7 +95,7 @@ SceneLoader = function(scene, container, camera, physics) {
     function() {
       var skySize = 1000.0;
       var skyRate = 0.005;
-      var noiseScale = new THREE.Vector2(100, 40);
+      var noiseScale = new THREE.Vector2(120, 48);
       var offset = new THREE.Vector2();
       var subOffset = new THREE.Vector2(0.0, 1.0);
       var skyGeo = new THREE.PlaneGeometry(skySize,skySize);
@@ -322,7 +322,7 @@ void main() { \
   /* sky color */ \
   vec3 color0 = 0.20*vec3(0.3, 0.08, 0.07); \
   /* cloud color */ \
-  vec3 color1 = 0.6*vec3(0.94, 0.60, 0.40); \
+  vec3 color1 = 0.5*vec3(0.94, 0.80, 0.60); \
   vec3 color = 3.0*mix(color0, color1, level); \
   color += 3.3*clamp(vPos.y/noiseScale.y * 7.0 - 4.0, 0.0, 1.0)*color0; \
   gl_FragColor = vec4(color, 0.0); \
