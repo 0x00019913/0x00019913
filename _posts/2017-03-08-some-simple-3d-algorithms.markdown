@@ -20,7 +20,7 @@ We assume that our data representation is a polygon soup - of triangles, specifi
 
 ### Volume
 
-So let's say we wanna calculate the volume. Pick a triangle and imagine it as an irregular tetrahedrom anchored at the origin by its fourth vertex. Now calculate the volume of the tetrahedron - the paper's formula for this is:
+So let's say we wanna calculate the volume. Pick a triangle and imagine it as an irregular tetrahedron anchored at the origin by its fourth vertex. Now calculate the volume of the tetrahedron - the paper's formula for this is:
 
 $$V = |\frac{1}{6}(-x_3 y_2 z_1 + x_2 y_3 z_1 + x_3 y_1 z_2 - x_1 y_3 z_2 - x_2 y_1 z_3 + x_1 y_2 z_3)|$$
 
