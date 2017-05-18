@@ -12,7 +12,7 @@ date: 2017-04-11 18:14:00
 
 <a href="https://0x00019913.github.io/meshy/">`Meshy`</a> is my browser-based tool for performing measurements and simple transformations on polygonal meshes, intended to make life easier for 3D printing folks. This post presents a comprehensive guide to all current features of the tool.
 
-> More features in development at the time of writing: mesh repair, decimation, thickness visualization.
+> More features in development at the time of writing: volumetric mesh repair, decimation, optimizations (particularly the raycasting mechanism).
 
 # Requirements
 
@@ -157,6 +157,23 @@ Takes 3 markers, which specify a circle in 3-space; measures radius, diameter, c
 ## Cross-sectional area
 
 Takes 1 marker; measures the cross-sectional area in the plane normal (perpendicular) to the given axis. Note that this measurement is deactivated by rotating on any other axis.
+
+Also calculates the size of the cross-section along the two axes lying in the measuring plane.
+
+# Mesh Thickness
+
+Visualizes approximate mesh thickness below the specified threshold. This is done by casting a ray along each face's negative normal and measuring the distance it travels before hitting the inside of the mesh.
+
+Any part of the mesh that's below the threshold $$\tau$$ is shown in red, interpolated linearly from full white to full red over the $$[\tau, 0]$$ interval.
+
+The UI is accessible while this is happening (the octree for the mesh is initially built if not already present, and mesh thickness is calculated), but performing any transformation or deleting the mesh cancels any ongoing calculation. The advantage of leaving the UI accessible is that 1. the user can do measurements and calculations in the meantime and 2. the entire tool doesn't lock up indefinitely without any feedback.
+
+(NB: consulting the original paper that prompted this method - "Consistent Mesh Partitioning and Skeletonisation using the Shape Diameter Function" - one will see that the SDF is canonically calculated by casting 30 rays in a wide cone; however, I settled for only casting one ray because this is already quite expensive to do in a non-parallel way. One ray provides a poor approximation, but it should nonetheless give a fair idea of where the mesh is thin.)
+
+Possible alternatives to this method, which I may implement eventually:
+
+1. use the full SDF (30 rays in a 120$$^\circ$$ cone) over a randomly picked set of faces, then interpolate the SDF over the remaining surface, and
+2. remesh the model to a much lower resolution such that the polygon distribution is more or less even (presumably via the octree), then do the full SDF over the new model's faces; this seems to vaguely describe Shapeways's internal algorithm and makes a lot of sense to me.
 
 # Repair (beta)
 
