@@ -14,7 +14,6 @@ Stage.prototype.initViewport = function() {
   this.container = document.getElementById('header');
 
   if (!Detector.webgl) {
-    Detector.addGetWebGLMessage();
     _this.container.innerHTML = "Welp! Your browser doesn't support WebGL. This element will remain blank.";
     return;
   }
