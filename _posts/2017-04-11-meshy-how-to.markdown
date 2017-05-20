@@ -10,9 +10,9 @@ date: 2017-04-11 18:14:00
 * TOC
 {:toc}
 
-<a href="https://0x00019913.github.io/meshy/">`Meshy`</a> is my browser-based tool for performing measurements and simple transformations on polygonal meshes, intended to make life easier for 3D printing folks. This post presents a comprehensive guide to all current features of the tool.
+<a href="https://0x00019913.github.io/meshy/">`Meshy`</a> is my browser-based tool for performing measurements and transformations on polygonal meshes, intended to make life easier for 3D printing folks. This post presents a comprehensive guide to all current features of the tool.
 
-> More features in development at the time of writing: volumetric mesh repair, decimation, optimizations (particularly the raycasting mechanism).
+> More features in development at the time of writing: volumetric mesh repair, decimation, optimizations (particularly the raycasting mechanism), more import/export formats, UI improvements.
 
 # Requirements
 
@@ -20,7 +20,7 @@ A computer with a GPU and a browser capable of running WebGL, with Javascript en
 
 # General use
 
-The user can upload a mesh. At any given time, the tool can contain one mesh (the mesh can be comprised of multiple islands, but the geometry must all come from one file). The user can perform standard transformations (translations, rotations, scaling, floor, center) with respect to the axes, use any of `meshy`'s calculation and measurement tools, export the mesh, and change some viewport settings. The user can delete the mesh and then upload another.
+The user can upload a mesh. At any given time, the tool can contain one mesh (the mesh can be comprised of multiple islands, but the geometry must all come from one file). The user can perform standard transformations (translations, rotations, scaling, floor, center) with respect to the axes, use any of `meshy`'s calculation, measurement, and repair tools, export the mesh, and change some viewport settings. The user can delete the mesh and then upload another.
 
 # Interface and controls
 
@@ -40,7 +40,9 @@ The printout area next to the axis widget indicates status changes, events, and 
 
 # Import
 
-Supported file formats are OBJ and binary STL (as opposed to ASCII STL). There appears to be a rough upper limit of 50-80MB on the upload size, which is in the neighborhood of what you'd use for 3D printing. I've been able to load meshes with around 1-2 million polygons. It depends on your browser and computer. If the page hangs, the file's too big.
+Supported file formats are OBJ and STL (binary and ASCII). There appears to be a rough upper limit of 50-80MB on the upload size, which is in the neighborhood of what you'd use for 3D printing. I've been able to load meshes with around 1-2 million polygons. It depends on your browser and computer. If the page hangs, the file's too big.
+
+`Meshy` uses the first 6 bytes of an STL file to determine whether a file is binary or ASCII - an ASCII file begins with the characters `'solid '`, while a binary file does not. The guideline is not absolutely binding, but Wikipedia warns explicitly against violating it.
 
 ## Note on units
 
@@ -48,19 +50,19 @@ Neither STL nor OBJ files have intrinsic units. I hear software will often inter
 
 ## Format specifics
 
-<a href="https://en.wikipedia.org/wiki/STL_(file_format)">By Wikipedia</a>, face normals in STL files are assumed to be normalized (i.e., vectors of unit length); `meshy` does not check whether they are or not. (Maybe it should?)
+<a href="https://en.wikipedia.org/wiki/STL_(file_format)">By Wikipedia</a>, face normals in STL files should be normalized (i.e., vectors of unit length); `meshy` doesn't assume this and normalizes them just in case. An insufficient number of vertices on a face (less than 3) causes the import to fail.
 
-N-gons in OBJ files are disallowed (i.e., `meshy` grabs at most the first four vertices of a given face and ignores the rest). Quads are allowed, but triangulated.
+N-gons in OBJ files are disallowed (i.e., `meshy` grabs at most the first four vertices of a given face and ignores the rest). Quads are allowed, but triangulated.  A number of vertex indices less than 3 causes the import to fail.
 
 Technical note: there's an endianness switch under Settings > Technical, which indicates the assumed endianness of the imported mesh.
 
 # Export
 
-The user can specify a filename and export as either STL or OBJ.
+The user can specify a filename and export as either OBJ or STL (`exportSTL` exports as binary STL, `exportSTLascii` exports as ASCII STL).
 
-If the current mesh was imported as an STL, an exported STL file will retain the same 80-byte header; else, the exported header will be set to 80 0 bytes.
+If the current mesh was imported as a binary STL, an exported binary STL file will retain the same 80-byte header; else, the exported header will be set to 80 0 bytes.
 
-OBJ files will export a list of vertices and a list of triangles. Quads are not preserved; neither are normals nor UVs. None of these are typically required for 3D printing.
+OBJ files will export a list of vertices and a list of triangles. Quads are not preserved; neither are normals nor UVs. None of these are typically required for 3D printing. I may change this in the future.
 
 # Settings
 
