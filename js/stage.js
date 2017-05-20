@@ -33,7 +33,7 @@ Stage.prototype.initViewport = function() {
     _this.physics = new Physics();
 
     var sceneLoader = new SceneLoader(_this.scene, _this.container, _this.camera, _this.physics);
-    sceneLoader.load([4]);
+    sceneLoader.load([0, 3, 4]);
 
     /* RENDER */
     _this.renderer = new THREE.WebGLRenderer({ antialias: true });
