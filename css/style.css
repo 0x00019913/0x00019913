@@ -4,6 +4,8 @@ html, body {
   margin: 0;
   background-color: #fff;
   font-family: 'Cardo', sans-serif;
+  width: 100%;
+  height: 100%;
 }
 
 #header {
@@ -53,6 +55,22 @@ html, body {
 #fullscreen-button:hover {
   opacity: 1;
 }
+#close-header-button {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  z-index: 3;
+  top: 5px;
+  left: 5px;
+  cursor: pointer;
+  opacity: 0.5;
+  background-image: url('/assets/img/header_close.png');
+  transition: opacity 200ms ease, background-image 200ms ease;
+  -webkit-transition:  opacity 200ms ease, background-image 200ms ease;
+}
+#close-header-button:hover {
+  opacity: 1;
+}
 
 #main-wrapper {
   max-width: 800px;
@@ -60,7 +78,7 @@ html, body {
   margin: 0 auto;
   position: relative;
   z-index: 10;
-  top: 500px;
+  top: 50%;
 }
 
 /* post list */

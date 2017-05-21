@@ -4,6 +4,7 @@ Stage = function() {
   this.camera = null;
   this.scene = null;
   this.renderer = null;
+  this.stopped = false;
 
   this.initViewport();
 }
@@ -63,6 +64,7 @@ Stage.prototype.initViewport = function() {
 
   var time = null;
   function animate(stamp) {
+    if (_this.stopped) return;
     requestAnimationFrame(animate);
     if (time===null) {
       time = stamp;
@@ -77,4 +79,13 @@ Stage.prototype.initViewport = function() {
     _this.physics.iterate(dt);
     _this.renderer.render(_this.scene, _this.camera);
   }
+}
+
+Stage.prototype.stop = function() {
+  if (this.stopped) return;
+  this.stopped = true;
+  this.container.removeChild(this.renderer.domElement);
+  this.renderer = null;
+  this.camera = null;
+  this.scene = null;
 }
