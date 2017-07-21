@@ -7,7 +7,7 @@ excerpt: "An unsurprisingly brief post about how Minesweeper works internally."
 date: 2017-07-20 22:56:00
 ---
 
-In my tens of thousands of games (no, seriously) of Windows 7 Minesweeper, I never considered how the game actually works. <a href="https://0x00019913.github.io/tnms/">A self-imposed AngularJS exercise later</a>, I've formalized the (very simple) behaviors of the game, as detailed below.
+In my tens of thousands of games (no, seriously) of Win 7 Minesweeper, I worked out lots of patterns but never considered how the game actually works. <a href="https://0x00019913.github.io/tnms/">A self-imposed AngularJS exercise later</a>, I've formalized the (very simple) behaviors of the game, as detailed below.
 
 ## Game Setup
 
@@ -23,18 +23,18 @@ The Minesweeper board is an `H`-by-`W` array of cells. Each cell starts out clos
 When a player clicks a closed cell, it opens and one of the following occurs:
 
 - If the cell contains a mine, the game is lost.
-- If the cell is adjacent to `n` mines, the cell opens and displays `n`.
-- If the cell contains nothing, it opens and opens its neighbors recursively.
+- If the cell is adjacent to `n` mines, the cell opens and contains the number `n`.
+- If the cell is empty (neither contains nor borders mines), it opens and opens its neighbors recursively.
 
 The following click behaviors are supported:
 
 - Left-click a closed cell: the cell opens.
 - Right-click a closed cell: toggles the cell flag. While the cell is flagged, left-clicking it does nothing.
-- While hovering over an open number cell, hold both mouse buttons and release one of them: if the cell displays `n` and borders exactly `n` flagged cells, its unflagged neighbors are recursively opened.
+- Hold both mouse buttons and release one of them on an open number cell: if the cell displays `n` and borders exactly `n` flagged cells, its unflagged neighbors are recursively opened.
 
 The end conditions are:
 
-- The player clicks a mine: the game ends and no further interactions, save for restarting the game, is allowed.
+- The player clicks a mine: the game ends and allows no further interaction, save for restarting the game.
 - The player opens every cell that does not contain a mine: this wins the game.
 - The player resets the game.
 
@@ -44,7 +44,7 @@ One of the two interesting parts of this is the algorithm to open cells. It turn
 
 - If the cell is a mine, lose.
 - If the cell is a number cell, just reveal that cell.
-- If the cell contains nothing, it borders no mines. That means it's safe to open all of its neighbors. If any of its neighbors are empty, open that one too, recursively. If the cell is a number cell, just open that one - it will be guaranteed mine-free.
+- If the cell is empty, it borders no mines. That means it's safe to open all of its neighbors. If any of its neighbors are empty, open them too, recursively. If the cell is a number cell, just open that one - it will be guaranteed mine-free.
 
 This way, when clicking an empty cell, we end up doing a depth-first search and propagating the opening method through the island of adjacent empty cells.
 
@@ -56,7 +56,7 @@ This is also simple. For each one of the `N` mines, do the loop:
 - If the coords are already on a mine, generate a new pair.
 - Repeat till you hit a free cell.
 
-Of course, since we're poking the board randomly, this could run for a long time. But, if the total number of cells in the board (`H*W`) is substantially greater than the number of mines (e.g., the standard "advanced" board is 30x16 with 99 mines), then you're very unlikely to get too many conflicts.
+Of course, since we're poking the board randomly, this could run for a long time. But, if the total number of cells in the board (`H*W`) is substantially greater than the number of mines (e.g., the standard "advanced" board is 30x16 = 480 with 99 mines), then you're very unlikely to get too many conflicts.
 
 ## Additional Considerations
 
