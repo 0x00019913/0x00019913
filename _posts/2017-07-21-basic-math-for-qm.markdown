@@ -38,7 +38,7 @@ A vector can also be a function or even a matrix, as long as it satisfies the st
 
 ## Bases
 
-A set of vectors $$\lvert v_1\rangle, \ldots, \lvert v_n\rangle$$ is linearly independent if no vector in this set can be written as a linear combination of others, i.e., for any vector $$\lvert v_i\rangle$$ in this set
+A set of vectors $$\lvert v_1\rangle, \ldots, \lvert v_n\rangle$$ is linearly independent if no vector in this set can be written as a linear combination of the others, i.e., for any coefficients $$a_i$$,
 
 $$\sum_i a_i \lvert v_i\rangle = 0 \implies a_i = 0$$
 
@@ -50,7 +50,7 @@ An operator $$A$$ is a map $$A : V \rightarrow W$$, i.e., it takes a vector in $
 
 $$A \sum_i v_i \lvert i\rangle = \sum_i v_i A \lvert i\rangle$$
 
-So operators distribute into and out of sums and everything is peachy. The identity $$I$$ is customarily written without reference to any particular basis or dimensionality and is understood to take any vector and scalar into itself.
+So operators distribute into and out of sums and everything is peachy. The identity map $$I$$ is customarily written without reference to any particular basis or dimensionality and is understood to take any vector and scalar into itself.
 
 Importantly, if we have a basis $$\lvert v_i\rangle$$ of $$V$$ and basis $$\lvert w_i\rangle$$ of W, we recognize that A operating on some vector $$\lvert v_j\rangle$$ produces some linear combination of $$W$$'s basis vectors, which we call $$A$$'s matrix elements. This indicates that
 
@@ -65,7 +65,7 @@ The inner product of two vectors $$\lvert u\rangle$$ and $$\lvert v\rangle$$, re
 
 $$\langle u\lvert v\rangle = \lvert u\rangle^\dagger \lvert v\rangle = \sum_i u_i^* v_i$$
 
-where the two vectors are represented in the same basis and $$u_i$$ and $$v_i$$ are their coefficients.
+where the two vectors are represented in the same orthonormal basis and $$u_i$$ and $$v_i$$ are their coefficients.
 
 The magnitude of a vector $$\lvert v\rangle$$ is written as
 
@@ -87,7 +87,7 @@ where the denominator is just the magnitude of the numerator, for the sake of cl
 
 ## Outer Products, Projection Operators, Completeness Relation
 
-An outer product of two vectors $$\lvert w\rangle \in W$$ and $$\lvert v\rangle \in V$$ is written as $$\lvert w\rangle\langle v\rvert$$. This is a linear operator.
+An outer product of two vectors $$\lvert w\rangle \in W$$ and $$\lvert v\rangle \in V$$ is written as $$\lvert w\rangle\langle v\rvert$$. This is a linear operator; it's also a map $$V \rightarrow W$$.
 
 Suppose we have vector $$\lvert v\rangle = \sum_i v_i \lvert i\rangle$$. Let's operate on it with the quantity $$\sum_i \lvert i\rangle\langle i\rvert$$:
 
