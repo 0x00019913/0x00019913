@@ -6,7 +6,7 @@ excerpt: "Me."
 
 My name is a number.
 
-I like 3D. Educated in physics and computer science, 3D modeling hobbyist, learning WebGL for personal projects and because it'll become a whole lot more relevant in the near future.
+I like 3D. Educated in physics and computer science, 3D modeling hobbyist, learning WebGL for personal projects and because browser-based 3D technologies will become much relevant in the near future.
 
 Started up this brog because 1. it seems like a good impetus to periodically learn something new and write it up and 2. I've always wanted a decent personal page.
 
@@ -14,6 +14,14 @@ Started up this brog because 1. it seems like a good impetus to periodically lea
 
 I do occasional 3D printing, for which purpose I'm writing <a href="https://0x00019913.github.io/meshy/">a utility</a> that does measurements and simple transformations on OBJ and STL files. Very much a WIP and will get more functionality in the future.
 
+Stuff:
+
 <a href="http://0x00019913.deviantart.com/">deviantart</a>
+
+<a href="https://0x00019913.github.io/tnms/">Totally not Minesweeper</a>
+
+<a href="https://0x00019913.github.io/click/">clicking practice</a>
+
+<a href="https://0x00019913.github.io/shady/">play with shaders</a>
 
 0x00019913@gmail.com
