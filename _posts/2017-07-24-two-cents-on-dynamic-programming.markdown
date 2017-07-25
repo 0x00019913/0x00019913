@@ -8,7 +8,7 @@ date: 2017-07-24 23:48:00
 hidden: 0
 ---
 
-Of the elementary topics in computer science, I've found dynamic programming to be the most infuriatingly difficult to intuit to my satisfaction. So here's a little compendium of standard-ish problems with brief explanations and explicit recursions. I'll use the symbol `M` to denote the optimal solution.
+Of the elementary topics in computer science, I've found dynamic programming to be the most weirdly difficult to intuit to my satisfaction. So here's a little compendium of standard-ish problems with brief explanations and explicit recursions. I'll use the symbol `M` to denote the optimal solution.
 
 I also won't go into code nor write out how the top-down approach turns into bottom-up; it tends to be a comparatively direct conversion.
 
