@@ -3,7 +3,7 @@ layout: post
 title: "Two Cents on Dynamic Programming"
 author: "0x00019913"
 mathjax: true
-excerpt: "Some dynamic programming problems with explained solutions"
+excerpt: "Some dynamic programming problems with explained solutions."
 date: 2017-07-24 23:48:00
 hidden: 0
 ---
