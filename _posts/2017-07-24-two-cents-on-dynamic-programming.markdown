@@ -8,17 +8,24 @@ date: 2017-07-24 23:48:00
 hidden: 0
 ---
 
+* TOC
+{:toc}
+
 Of the elementary topics in computer science, I've found dynamic programming to be the most weirdly difficult to intuit to my satisfaction. So here's a little compendium of standard-ish problems with brief explanations and explicit recursions. I'll use the symbol `M` to denote the optimal solution.
 
-I also won't go into code nor write out how the top-down approach turns into bottom-up; it tends to be a comparatively direct conversion.
+I won't go into code nor write out how the top-down approach turns into bottom-up; it tends to be a comparatively easy conversion.
 
 ## But First...
 
-The way to solve a dynamic programming problem seems to hinge, anticlimactically, on internalizing the thing everyone says to do: break the problem into smaller problems. I don't feel like this conclusion gives enough intuition to actually solve a problem, but it's presumably the core of the matter.
+tl;dr: DP is hard.
 
-Often the reasoning will be of the form "let's take an arbitrary subset of the problem and figure out the ways we could've arrived at that subset from some smaller subset" (e.g., the knapsack problem or the domino tiling problem). The degrees of freedom in a problem are a determining factor: for instance, when finding the longest palindromic subsequence of a string, you have to match up pairs of characters and so end up closing in from both ends of the string; thus the optimum `M` is bivariate and the runtime ends up being $$O(n^2)$$.
+The way to solve a dynamic programming problem seems to hinge, anticlimactically, on internalizing the thing everyone says to do: break the problem into smaller problems.
+
+Often the reasoning will be of the form "let's take an arbitrary subproblem and figure out the ways we could've arrived at that problem from some smaller subproblem" (e.g., the knapsack problem or the domino tiling problem) or, equivalently, "take a subproblem and enumerate the ways it could be reduced to a smaller subproblem". The degrees of freedom in a problem are a determining factor: for instance, when finding the longest palindromic subsequence of a string, you have to match up pairs of characters and so end up closing in from both ends of the string; thus the optimum `M` is bivariate and the runtime ends up being $$O(n^2)$$.
 
 Additionally, a repeating pattern (or perhaps even a defining feature) seems to be the task of finding a path through the problem that extremizes a quantity; this quantity is `M`. The result of the calculation will tell you the extremum but not the path, but you can trace it back by looking at the intermediate values of `M`.
+
+In a sense, I won't provide a justification for *why* dynamic programming is the right approach to a problem; I'll just describe how you do it and leave it at that. It's entirely up to the solver to recognize a dynamic programming problem as such.
 
 ## 0/1 Knapsack
 
@@ -67,7 +74,7 @@ $$
 
 ## Longest Common Subsequence
 
-Probably the best-known DP problem.
+Maybe the best-known DP problem.
 
 Say we have two strings $$A$$ and $$B$$, e.g., "AGCAT" and "GAC". Find the length of the longest common subsequence (not necessarily contiguous within either string). Here the LCS is "GA" or "AC".
 
@@ -89,4 +96,64 @@ M[i, j] = \left\{\begin{aligned}
 \right.
 $$
 
-(It's 4 in the morning right now, so I'll do a few more tomorrow. The internet is certainly not short on examples.)
+## Make a String into a Palindrome
+
+What's the smallest number of characters you have to add (not remove, mind) to string $$S$$ to make it a palindrome?
+
+### Logic
+
+Once again, we're comparing two elements of the string, so we need two iterators. Consider any substring from $$i$$ to $$j$$. Are the first and last characters the same ($$S[i] = S[j]$$)? Then we can just ignore them and move on to computing the result for the $$i+1$$ and $$j-1$$. Are the endpoints different? We imagine that we add an element to either end to *make* the endpoints match, then cut those off and recurse on the substring that's left. This means that `M` will be 1 (for the char we added) plus the min of `M` on $$[i+1:j]$$ and $$[i:j-1]$$.
+
+### Recursion
+
+$$
+M[i, j] = \left\{\begin{aligned}
+&M[i+1, j-1] &&: S[i] = S[j] \\
+&1 + \min(M[i+1, j], M[i, j-1]) &&: S[i] \neq S[j]
+\end{aligned}
+\right.
+$$
+
+## Number of Ways to Write a Number as a Sum
+
+This one's from Jaehyun Park's notes. Calculate the number of ways in which you can write a number $$n$$ as a sum of $$1$$, $$3$$, and $$4$$. Of course, $$1+4$$ and $$4+1$$ are the same sum.
+
+### Logic
+
+This is a "how can we form a subproblem from smaller subproblems" example. Consider a number $$i$$ and think about how we could've arrived at it from a smaller number. Either we got there by adding 1 to $$i-1$$, or by adding 3 to $$i-3$$, or by adding 4 to $$i-4$$. The number of ways we could've gotten to $$i$$, then, is the numbers of ways we could've gotten $$i-1$$ plus the same for $$i-3$$ plus the same for $$i-4$$.
+
+You do, of course, have to hardcode `M` for $$0 \le i < 4$$.
+
+### Recursion
+
+$$
+M[i] = M[i-1] + M[i-3] + M[i-4]
+$$
+
+## Floyd-Warshall Algorithm
+
+Say we have an undirected weighted graph with vertices $$V$$ labeled $$1$$ through $$n$$, with the weight from vertex $$i$$ to vertex $$j$$ written as $$w_{ij}$$. (The weights are allowed to go negative as long as the graph doesn't have negative cycles.) Find the shortest path between each pair of vertices.
+
+### Logic
+
+As in the string problems above, we'll consider the $$i$$-to-$$j$$ path as a subproblem. However, we can't just call it a day here because, given the best $$i-j$$ path and a vertex outside the $$[i, j]$$ range, there's no $$O(1)$$ way to check how to connect the vertex to the range. So this necessitates an additional iterator.
+
+We formulate the objective like this: the shortest path from $$i$$ to $$j$$ using only vertices in the $$[1,k]$$ range (in addition to $$i$$ and $$j$$). So at $$k=0$$, $$i$$'s shortest path to $$j$$ is just $$w_{ij}$$.
+
+Then $$M[i, j, k]$$ is the length of a path that goes from $$i$$ to $$j$$ through some subset of the vertices $${1, \cdots, k}$$. What if we included vertex $$k+1$$? Then either the shortest $$i$$-to-$$j$$ path doesn't use $$k+1$$ or it goes from $$i$$ to $$k+1$$ to $$j$$, so $$M[i, j, k+1]$$ is the min of $$M[i, j, k]$$ and the path through $$k+1$$.
+
+### Recursion
+
+$$
+M[i, j, k+1] = \min(M[i, j, k], M[i, k+1, k] + M[k+1, j, k])
+$$
+
+## References
+
+<a href="https://cw.fel.cvut.cz/wiki/_media/courses/ae4m33bia/dp_examples.pdf">DP Examples</a>
+
+<a href="https://www.cs.cmu.edu/~avrim/451f09/lectures/lect1001.pdf">DP Lecture from CMU</a>
+
+<a href="https://web.stanford.edu/class/cs97si/04-dynamic-programming.pdf">Jaehyun Park's lecture notes from Stanford</a>
+
+<a href="https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm">Floyd-Warshall algo on Wikipedia</a>
