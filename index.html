@@ -14,11 +14,15 @@ layout: default
 
 {% for post in site.posts %}
 
+  {% if post.hidden != 1 %}
+
   <div class="post-list-line">
     <span class="post-list-date">{{ post.date }}</span>
     <a class="post-list-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
     <div class="post-list-excerpt">{{ post.excerpt }}</div>
   </div>
+
+  {% endif %}
 
 {% endfor %}
 
