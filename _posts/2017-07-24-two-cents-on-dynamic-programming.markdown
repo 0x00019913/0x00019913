@@ -29,7 +29,7 @@ In a sense, I won't provide a justification for *why* dynamic programming is the
 
 ## 0/1 Knapsack
 
-We have an array of $$n$$ values $$\{v_1, \cdots, v_n\}$$ and an array of corresponding weights $$\{w_1, \cdots, w_n\}$$. The knapsack's weight capacity is $$W$$ and we'd like to pick items to put into the knapsack while maximizing the total value and not overfilling the knapsack.
+We have an array of $$n$$ values $$\{v_1, \ldots, v_n\}$$ and an array of corresponding weights $$\{w_1, \ldots, w_n\}$$. The knapsack's weight capacity is $$W$$ and we'd like to pick items to put into the knapsack while maximizing the total value and not overfilling the knapsack.
 
 ### Logic
 
@@ -58,9 +58,9 @@ Given a string $$S$$ of length $$n$$, e.g., "AEDCFDEC", find the length of the l
 
 We again start cutting elements off the edge, but this time we do it off both ends independently. Why? Hindsight. :P My intuition is that we end up zeroing in on both ends of the palindrome and the palindromes nested inside, so we need to vary both the start and end. (This means we again have a bivariate `M`.)
 
-The subproblems are the substrings of $$S$$, specifically $$S[i \cdots j]$$. `M` is the length of the palindromic subsequence.
+The subproblems are the substrings of $$S$$, specifically $$S[i \ldots j]$$. `M` is the length of the palindromic subsequence.
 
-Start from the ends of a particular substring. Are the two endpoints equal ($$S[i] = S[j]$$)? Then we might as well include those in whatever palindromic substring it contains, so `M` increases by 2 plus the length of the substring excluding its two endpoints. Are the endpoints not equal? Then `M` is the length of the LPS of the same substring minus one of its endpoints (take the max of the two choices).
+Start from the ends of a particular substring. Are the two endpoints equal ($$S[i] = S[j]$$)? Then we might as well include those in whatever palindromic substring it contains, so `M` for this $$i,j$$ pair equals 2 plus the length of the substring excluding its two endpoints. Are the endpoints not equal? Then `M` is the length of the LPS of the same substring minus one of its endpoints (take the max of the two choices).
 
 ### Recursion
 
@@ -136,11 +136,11 @@ Say we have an undirected weighted graph with vertices $$V$$ labeled $$1$$ throu
 
 ### Logic
 
-As in the string problems above, we'll consider the $$i$$-to-$$j$$ path as a subproblem. However, we can't just call it a day here because, given the best $$i-j$$ path and a vertex outside the $$[i, j]$$ range, there's no $$O(1)$$ way to check how to connect the vertex to the range. So this necessitates an additional iterator.
+As in the string problems above, we'll consider the $$i$$-to-$$j$$ path as a subproblem. However, we can't just call it a day here because, given the best $$i$$-$$j$$ path and a vertex outside the $$i$$-$$j$$ path, there's no $$O(1)$$ way to check how to connect the vertex to the path. So this necessitates an additional iterator.
 
 We formulate the objective like this: the shortest path from $$i$$ to $$j$$ using only vertices in the $$[1,k]$$ range (in addition to $$i$$ and $$j$$). So at $$k=0$$, $$i$$'s shortest path to $$j$$ is just $$w_{ij}$$.
 
-Then $$M[i, j, k]$$ is the length of a path that goes from $$i$$ to $$j$$ through some subset of the vertices $${1, \cdots, k}$$. What if we included vertex $$k+1$$? Then either the shortest $$i$$-to-$$j$$ path doesn't use $$k+1$$ or it goes from $$i$$ to $$k+1$$ to $$j$$, so $$M[i, j, k+1]$$ is the min of $$M[i, j, k]$$ and the path through $$k+1$$.
+Then $$M[i, j, k]$$ is the length of a path that goes from $$i$$ to $$j$$ through some subset of the vertices $${1, \ldots, k}$$. What if we included vertex $$k+1$$? Then either the shortest $$i$$-to-$$j$$ path doesn't use $$k+1$$ or it goes from $$i$$ to $$k+1$$ to $$j$$, so $$M[i, j, k+1]$$ is the min of $$M[i, j, k]$$ and the weight of the path through $$k+1$$.
 
 ### Recursion
 
@@ -168,11 +168,11 @@ Of course, $$M[\{i\}, i] = 0$$ because the graph consisting of $$i$$ has no cost
 
 ## Longest Increasing Subsequence
 
-You have an array $$[v_1, \cdots, v_n]$$. Find the length of the longest increasing subsequence (LIS).
+You have an array $$[v_1, \ldots, v_n]$$. Find the length of the longest increasing subsequence (LIS).
 
 ### Logic
 
-`M` is, as always, the objective - the length of the LIS ending on a term at index $$i$$. Take the last term in the subarray, $$v_i$$. What's the longest subsequence that ends with that term? It's 1 plus the maximal $$M[j]$$ for $$j$$ in the $$0$$-to$$i-1$$ interval such that $$v_j<v_i$$.
+`M` is, as always, the objective - the length of the LIS ending on the term at index $$i$$. Take the last term in the $$[v_1, \ldots, v_i]$$ subarray. What's the longest subsequence that ends with that term? It's 1 plus the maximal $$M[j]$$ for $$j$$ in the $$[0, \ldots, i-1]$$ interval such that $$v_j<v_i$$.
 
 ### Recursion
 
@@ -180,7 +180,7 @@ $$
 M[i] = 1 + \max_{j : j<i, v_j<v_i} M[j]
 $$
 
-As stated, we do need to find every $$j$$ such that $$v_j<v_i$$. This makes the algorithm $$O(n^2)$$ in the worst case. We can turn this into $$O(n \log n)$$ if we store predecessor information (see the <a href="https://en.wikipedia.org/wiki/Longest_increasing_subsequence">Wikipedia article</a>).
+As stated, we do need to find every $$j$$ such that $$v_j<v_i$$. This makes the algorithm $$O(n^2)$$. We can turn this into $$O(n \log n)$$ if we store predecessor information (see the <a href="https://en.wikipedia.org/wiki/Longest_increasing_subsequence">Wikipedia article</a>).
 
 ## References
 
