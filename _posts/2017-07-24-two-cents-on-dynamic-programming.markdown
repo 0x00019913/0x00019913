@@ -11,7 +11,7 @@ hidden: 0
 * TOC
 {:toc}
 
-Of the elementary topics in computer science, I've found dynamic programming to be the most weirdly difficult to intuit to my satisfaction. So here's a little compendium of standard-ish problems with brief explanations and explicit recursions. I'll use the symbol `M` to denote the optimal solution.
+Of the elementary topics in computer science, I've found dynamic programming to be the most weirdly difficult to intuit to my satisfaction. So here's a little compendium, in no particular order, of standard-ish problems with brief explanations and explicit recursions. I'll use the symbol `M` to denote the optimal solution.
 
 I won't go into code nor write out how the top-down approach turns into bottom-up; it tends to be a comparatively easy conversion.
 
@@ -147,6 +147,40 @@ Then $$M[i, j, k]$$ is the length of a path that goes from $$i$$ to $$j$$ throug
 $$
 M[i, j, k+1] = \min(M[i, j, k], M[i, k+1, k] + M[k+1, j, k])
 $$
+
+## Traveling Salesman
+
+Also from Jaehyun Park's notes. Given a weighted graph of $$n$$ nodes numbered $$1$$ through $$n$$ with weights $$w_{ij}$$, find the shortest path that visits each node exactly once (AKA a Hamiltonian path).
+
+### Logic
+
+Say we have a Hamiltonian path covering subset $$S$$ of the nodes and ending on node $$j$$. This path has cost $$M[S, i]$$. The path got to node $$i$$ from some node $$s \in S$$, and the cost of the path till that point is $$M[S \setminus s, s]$$. So, at node $$i$$ we just minimize $$w_{is} + M[S \setminus s, s]$$ over all $$s \in S$$.
+
+Note that this is still quite exponential - the first argument of `M` varies with every single combination of the $$n$$ vertices. Still beats the naive $$O(n!)$$ solution, though.
+
+### Recursion
+
+$$
+M[S, i] = \min_{s \in S} (w_{is} + M[S \setminus s, s])
+$$
+
+Of course, $$M[\{i\}, i] = 0$$ because the graph consisting of $$i$$ has no cost.
+
+## Longest Increasing Subsequence
+
+You have an array $$[v_1, \cdots, v_n]$$. Find the length of the longest increasing subsequence (LIS).
+
+### Logic
+
+`M` is, as always, the objective - the length of the LIS ending on a term at index $$i$$. Take the last term in the subarray, $$v_i$$. What's the longest subsequence that ends with that term? It's 1 plus the maximal $$M[j]$$ for $$j$$ in the $$0$$-to$$i-1$$ interval such that $$v_j<v_i$$.
+
+### Recursion
+
+$$
+M[i] = 1 + \max_{j : j<i, v_j<v_i} M[j]
+$$
+
+As stated, we do need to find every $$j$$ such that $$v_j<v_i$$. This makes the algorithm $$O(n^2)$$ in the worst case. We can turn this into $$O(n \log n)$$ if we store predecessor information (see the <a href="https://en.wikipedia.org/wiki/Longest_increasing_subsequence">Wikipedia article</a>).
 
 ## References
 
