@@ -180,15 +180,15 @@ def maxgain(root):
         return (0, 0)
 
     # max gain from the left child and from its descendants
-    l,ld = self.maxgain(root.left)
+    l,ld = maxgain(root.left)
     # max gain fromt he right child and from its descendants
-    r,rd = self.maxgain(root.right)
+    r,rd = maxgain(root.right)
 
     return (root.val + ld + rd, max(l, ld) + max(r, rd))
 
 def nonChildSum(root):
     # the max of picking the root or its descendants
-    return max(self.maxgain(root))
+    return max(maxgain(root))
 {% endhighlight %}
 
 ### Rationale
