@@ -195,7 +195,9 @@ def nonChildSum(root):
 
 So that's looking pretty opaque.
 
-Suppose you're at the root of some subtree in this tree. We need to decide whether to take this node's value into our sum or not. Say we have a function that tells us the max gain from picking its children, and the max gain from not picking its children but some of their descendants. Let's go through the cases:
+Suppose you're at the root of some subtree in this tree. We need to decide whether to take this node's value into our sum or not. What do we need to decide this and compute the gain? Well, if we don't take the node, then we can take its children, so we need the max there. If we take the node, we can't take the children, so we need the max for *their* children.
+
+Say we have a function that tells us the max gain from picking its children, and the max gain from picking not its children but some of their descendants. Let's go through the cases:
 
 If we pick the current node, we can't pick either of its children. So the max gain from picking the root is its value plus the total max gain from its children's descendants.
 
@@ -207,7 +209,7 @@ And that's the recurrence.
 
 This is probably the weirdest solution here; the method to solve this problem struck me as esoteric and took me a while to grok.
 
-Suppose you have an array `a` of length `n` containing some of the numbers such that `1 <= a[i] <= n`. Some numbers are repeated, so some are missing. Find the missing numbers.
+Suppose you have an array `a` of length `n` containing some numbers such that `1 <= a[i] <= n`. Some numbers are repeated, so some are missing. Find the missing numbers.
 
 ### Solution
 
