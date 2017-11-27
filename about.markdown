@@ -16,12 +16,16 @@ I do occasional 3D printing, for which purpose I'm writing <a href="https://0x00
 
 Stuff:
 
-<a href="http://0x00019913.deviantart.com/">deviantart</a>
+<a href="https://www.instagram.com/0xmake/">A humble Instagram</a>
+
+<a href="https://www.artstation.com/ozen">A humble Artstation</a>
 
 <a href="https://0x00019913.github.io/tnms/">Totally not Minesweeper</a>
 
 <a href="https://0x00019913.github.io/click/">clicking practice</a>
 
 <a href="https://0x00019913.github.io/shady/">play with shaders</a>
+
+<a href="http://0x00019913.deviantart.com/">deviantart</a>
 
 0x00019913@gmail.com
